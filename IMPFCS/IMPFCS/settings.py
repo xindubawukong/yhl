@@ -69,11 +69,16 @@ DATABASES = {
     }
 }
 
+
+import json
+config = json.load(open('config.json'))
+MONGO_DATABASE_NAME = config['database_name'] 
+MONGO_HOST = config['database_host']
+MONGO_PORT = config['database_port']
+MONGO_USERNAME = config['database_username']
+MONGO_PASSWORD = config['database_password']
 import mongoengine
-MONGO_DATABASE_NAME = 'IMPFCS_database'
-MONGO_HOST = 'localhost'
-MONGO_PORT = 27017
-mongoengine.connect(MONGO_DATABASE_NAME, host=MONGO_HOST, port=MONGO_PORT)
+mongoengine.connect(MONGO_DATABASE_NAME, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USERNAME, password=MONGO_PASSWORD)
 
 
 # Internationalization
