@@ -11,9 +11,17 @@ Information management platform for campus sportsInformation management
 
 ***Other Useful Tools***
 
+* [mongoengine](http://mongoengine.org/)
 * [Sphinx](https://pypi.python.org/pypi/Sphinx/1.3b1)
 * [coverage.py](http://nedbatchelder.com/code/coverage/)
 
 ***Issues***
 
 * Language
+
+***Environment & Dependencies***
+
+* python 2.7.6
+* django 1.7
+* mongodb 2.6.5
+* mongoengine 0.8.7
