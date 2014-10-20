@@ -17,3 +17,10 @@ Information management platform for campus sportsInformation management
 ***Issues***
 
 * Language
+
+***Environment & Dependencies***
+
+* python 2.7.6
+* django 1.7
+* mongodb 2.6.5
+* mongoengine 0.8.7
