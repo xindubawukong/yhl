@@ -1,6 +1,8 @@
 Information management platform for campus sportsInformation management
 =======================================================================
 
-* django.contrib.auth 
+***Django Features that may be useful***
 
-* 2 projects vs 2 apps
+* [django.contrib.auth for user authentication](https://docs.djangoproject.com/en/1.7/topics/auth/#module-django.contrib.auth)
+* [apps](https://docs.djangoproject.com/en/1.7/ref/applications/)
+* [admin site](https://docs.djangoproject.com/en/1.7/ref/contrib/admin/)
