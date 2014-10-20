@@ -56,20 +56,25 @@ WSGI_APPLICATION = 'IMPFCS.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-from mongoengine import connect
-connect('IMPFCS_database')
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.dummy'
-    }
-}
+SESSION_ENGINE = 'mongoengine.django.sessions'
+SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 
 AUTHENTICATION_BACKENDS = (
     'mongoengine.django.auth.MongoEngineBackend',
 )
-SESSION_ENGINE = 'mongoengine.django.sessions'
-SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.dummy',
+    }
+}
+
+import mongoengine
+MONGO_DATABASE_NAME = 'IMPFCS_database'
+MONGO_HOST = 'localhost'
+MONGO_PORT = 27017
+mongoengine.connect(MONGO_DATABASE_NAME, host=MONGO_HOST, port=MONGO_PORT)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
