@@ -10,8 +10,10 @@ Information management platform for campus sportsInformation management
 * [tesing](https://docs.djangoproject.com/en/1.7/topics/testing/)
 
 ***Other Useful Tools***
+
 * [Sphinx](https://pypi.python.org/pypi/Sphinx/1.3b1)
 * [coverage.py](http://nedbatchelder.com/code/coverage/)
 
 ***Issues***
+
 * Language
