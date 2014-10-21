@@ -8,10 +8,3 @@
     <input type="text" name="password" id="input-password" /> 
     <input type="submit" value="add" />
 </form>
-
-<form action="{% url 'users:removeUser' %}" method="post">
-{% csrf_token %}
-    <label for="input-username">username</label>
-    <input type="text" name="username" id="input-username" />  
-    <input type="submit" value="remove" />
-</form>

@@ -1,7 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
+from django.db import IntegrityError
+import json
 
 
 def test(request):
@@ -13,19 +16,34 @@ def addUser(request):
         username = request.POST['username']
         pwd = request.POST['password']
         User.objects.create_user(username, password=pwd)
-        return HttpResponseRedirect(reverse('users:test'))
-    except (KeyError, ):
-        raise Http404
-
-def removeUser(request):
-    username = request.POST['username']
-    user = get_object_or_404(User, username=username)
-    user.delete()
-    return HttpResponseRedirect(reverse('users:test'))
+        ret = json.dumps({'error': False})
+    except (KeyError, ValueError):
+        ret = json.dumps({'error': True, 'errorMsg': 'username or password unavailable'})
+    except IntegrityError:
+        ret = json.dumps({'error': True, 'errorMsg': 'Exist user with the same username'})
+    return HttpResponse(ret)
 
 
 def userLogin(request):
-    return HttpResponse('This is userLogin')
+    try:
+        username = request.POST['username']
+        pwd = request.POST['password']
+    except KeyError:
+        ret = json.dumps({'error': True, 'errorMsg': 'username or password unavailable'})
+        return HttpResponse(ret)
+
+    user = authenticate(username=username, password=pwd)
+
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            ret = json.dumps({'error': False})
+        else:
+            ret = json.dumps({'error': True, 'errorMsg': 'inactive user'})
+    else:
+        ret = json.dumps({'error': True, 'errorMsg': 'illegal username or password'})
+    
+    return HttpResponse(ret)
 
 
 def userLogout(request):
