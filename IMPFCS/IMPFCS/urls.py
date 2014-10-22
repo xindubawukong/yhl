@@ -6,6 +6,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'IMPFCS.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^api/users/', include('users.urls', namespace='users')),
+    url(r'^site/', include('frontend.urls', namespace='frontend')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^auth/$', include('THU_auth.urls', namespace='THU_auth')),
 )
