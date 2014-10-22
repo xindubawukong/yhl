@@ -15,7 +15,10 @@ class THUAuthBackend(ModelBackend):
         try:
             user = User.objects.get(username=username)
             if user.is_superuser:
-                return user
+                if user.check_password(password):
+                    return user
+                else:
+                    return None
         except User.DoesNotExist:
             pass
         import THU_auth.views

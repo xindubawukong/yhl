@@ -1,19 +1,43 @@
-<h1>Please complete your information</h1>
+{% load staticfiles %}
 
-<form action="{% url 'frontend:completeInfo' %}" method="post">
-    {% csrf_token %}   
-    <label for="input-username">username</label>
-    <input type="text" name="username", value="{{user.username}}" id="input-username" disabled />
-    <br />
-    <label for="input-name">name</label>
-    <input type="text" name="name" id="input-name" />
-    <br />
-    <label for="input-gender">gender</label>
-    <br />
-    male
-    <input type="radio" name="gender" value="male" checked="checked" id="input-gender" />
-    female
-    <input type="radio" name="gender" value="female" id="input-gender" />
-    <br />
-    <input type="submit", value="submit" />
-</form>
+<html>
+
+<head>
+  <title>Login</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Loading Flat UI -->
+  <link rel="stylesheet" href="{% static 'frontend/css/flat-ui.css' %}" />
+</head>
+
+<body>
+    <h1>Please complete your information</h1>
+
+    <form action="{% url 'frontend:completeInfo' %}" method="post">
+        {% csrf_token %}   
+        <label for="input-username">username</label>
+        <input type="text" name="username", value="{{user.username}}" id="input-username" disabled />
+        <br />
+        <label for="input-name">name</label>
+        <input type="text" name="name" id="input-name" />
+        <br />
+
+        <div class="span3">
+            <h5 class="demo-panel-title">gender</h5>
+            <label class="radio">
+                <input type="radio" name="gender" value="male" checked="checked" id="input-gender" />
+            male
+            </label>
+            <br />
+            <label class="radio">
+                <input type="radio" name="gender" value="female" id="input-gender" />
+                    female
+            </label>
+        </div>
+        <br />
+        <input class="btn btn-primary" type="submit", value="submit" />
+    </form>
+
+</body>
+
+</html>
