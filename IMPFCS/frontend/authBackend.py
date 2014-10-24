@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.backends import ModelBackend
 from django.core.urlresolvers import reverse
 from urllib2 import urlopen, Request

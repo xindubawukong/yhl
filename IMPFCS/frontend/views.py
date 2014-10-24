@@ -3,12 +3,12 @@ from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
-from frontend.models import BasicInfo
+from frontend.models import UserInfo
 
 
 def loginUser(request):
     if request.method == 'GET':
-        if request.user.is_authenticated():
+        if request.user.is_authenticated() and request.user.is_active:
             return HttpResponseRedirect(reverse('frontend:profile'))
         return render(request, 'frontend/login.html')
     elif request.method == 'POST':
@@ -38,8 +38,13 @@ def logoutUser(request):
 
 def completeInfo(request):
     user = request.user
-    user.basicinfo = BasicInfo(name=request.POST['name'], gender=BasicInfo.MALE if request.POST['gender'] == 'male' else BasicInfo.FEMALE)
-    user.basicinfo.save()
+    user.userinfo = UserInfo(
+        name=request.POST['name'], 
+        gender=request.POST['gender'],
+        department=request.POST['department'],
+        studentClass=request.POST['studentClass'],
+    )
+    user.userinfo.save()
     user.is_active = True
     user.save()
     return HttpResponseRedirect(reverse('frontend:profile'))

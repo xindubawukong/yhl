@@ -15,26 +15,38 @@
 
     <form action="{% url 'frontend:completeInfo' %}" method="post">
         {% csrf_token %}   
-        <label for="input-username">username</label>
+        <label for="input-username">用户名</label>
         <input type="text" name="username", value="{{user.username}}" id="input-username" disabled />
         <br />
-        <label for="input-name">name</label>
+
+        <label for="input-name">姓名</label>
         <input type="text" name="name" id="input-name" />
         <br />
 
         <div class="span3">
-            <h5 class="demo-panel-title">gender</h5>
-            <label class="radio">
-                <input type="radio" name="gender" value="male" checked="checked" id="input-gender" />
-            male
-            </label>
+            <label class="demo-panel-title">性别</label>
             <br />
             <label class="radio">
+                <input type="radio" name="gender" value="male" checked="checked" id="input-gender" />
+            男
+            </label>
+            <label class="radio">
                 <input type="radio" name="gender" value="female" id="input-gender" />
-                    female
+            女
             </label>
         </div>
         <br />
+
+        <label for="department">院系</label>
+        <select id="department" name="department">
+            <option value="电子工程系">电子工程系</option>
+            <option value="计算机科学与技术系">计算机科学与技术系</option>
+        </select>
+        <br />
+
+        <label for="studentClass">班级</label>
+        <input class="text" name="studentClass" />
+
         <input class="btn btn-primary" type="submit", value="submit" />
     </form>
 
