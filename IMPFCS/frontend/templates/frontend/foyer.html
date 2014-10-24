@@ -1,0 +1,25 @@
+{% load staticfiles %}
+
+<html>
+
+<head>
+  <title>Foyer</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Loading Flat UI -->
+  <link rel="stylesheet" href="{% static 'frontend/css/flat-ui.css' %}" />
+</head>
+
+<body>
+  <h2>News<h2><br />
+  <a class="btn btn-primary" href="{% url 'frontend:profile' %}">profile</a><br />
+  <a class="btn btn-primary" href="{% url 'frontend:message' %}">message</a><br />
+  <a class="btn btn-primary" href="{% url 'frontend:resources' %}">resources</a><br />
+  <a class="btn btn-primary" href="{% url 'frontend:scores' %}">scores(for team members)</a><br />
+  <a class="btn btn-primary" href="{% url 'frontend:competitions' %}">competitions(for team members)</a><br />
+  <a class="btn btn-primary" href="{% url 'frontend:logout' %}">logout</a><br />
+
+
+</body>
+
+</html>

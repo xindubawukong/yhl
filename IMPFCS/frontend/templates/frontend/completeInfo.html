@@ -15,7 +15,7 @@
 
     <form action="{% url 'frontend:completeInfo' %}" method="post">
         {% csrf_token %}   
-        <label for="input-username">用户名</label>
+        <label for="input-username">学号</label>
         <input type="text" name="username", value="{{user.username}}" id="input-username" disabled />
         <br />
 
@@ -39,6 +39,7 @@
 
         <label for="department">院系</label>
         <select id="department" name="department">
+            <option value=""> </option>
             <option value="电子工程系">电子工程系</option>
             <option value="计算机科学与技术系">计算机科学与技术系</option>
         </select>
@@ -46,6 +47,7 @@
 
         <label for="studentClass">班级</label>
         <input class="text" name="studentClass" />
+        <br />
 
         <input class="btn btn-primary" type="submit", value="submit" />
     </form>

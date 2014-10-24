@@ -13,7 +13,6 @@ class UserInfo(models.Model):
         (FEMALE, '女')
     )
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='')
-    studentID = models.CharField(max_length=10, default='')
     EE = '电子工程系'
     CS = '计算机科学与技术系'
     MISSING = ''
@@ -33,7 +32,7 @@ class UserInfo(models.Model):
     PB_CHOICES = (
         (MISSING, ''),
         (QUNZHONG, '群众'),
-        (TUANYUAN, '共青团员'),
+        (TUANYUAN, '共青 团员'),
         (JIJIFENZI, '积极分子'),
         (YUBEIDANGYUAN, '预备党员'),
         (DANGYUAN, '党员'),

@@ -9,7 +9,7 @@ from frontend.models import UserInfo
 def loginUser(request):
     if request.method == 'GET':
         if request.user.is_authenticated() and request.user.is_active:
-            return HttpResponseRedirect(reverse('frontend:profile'))
+            return HttpResponseRedirect(reverse('frontend:foyer'))
         return render(request, 'frontend/login.html')
     elif request.method == 'POST':
         try:
@@ -19,7 +19,7 @@ def loginUser(request):
             if user is not None:
                 login(request, user)
                 if user.is_active:
-                    return HttpResponseRedirect(reverse('frontend:profile'))
+                    return HttpResponseRedirect(reverse('frontend:foyer'))
                 else:  
                     return render(request, 'frontend/completeInfo.html', {'user' : user})
             else:
@@ -47,11 +47,32 @@ def completeInfo(request):
     user.userinfo.save()
     user.is_active = True
     user.save()
-    return HttpResponseRedirect(reverse('frontend:profile'))
+    return HttpResponseRedirect(reverse('frontend:foyer'))
 
 
 @user_passes_test(lambda user: user.is_active)
 def profile(request):
+    return render(request, 'frontend/profile.html', {'user': request.user})
+
+
+@user_passes_test(lambda user: user.is_active)
+def foyer(request):
     if request.user.is_superuser:
         return HttpResponseRedirect('/admin/')
-    return render(request, 'frontend/profile.html', {'user': request.user})
+    return render(request, 'frontend/foyer.html', {'user': request.user})
+
+
+def message(request):
+    pass
+
+
+def resources(request):
+    pass
+
+
+def scores(request):
+    pass
+
+
+def competitions(request):
+    pass
