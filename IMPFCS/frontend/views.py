@@ -62,17 +62,21 @@ def foyer(request):
     return render(request, 'frontend/foyer.html', {'user': request.user})
 
 
+@user_passes_test(lambda user: user.is_active)
 def message(request):
-    pass
+    return HttpResponse('message')
 
 
+@user_passes_test(lambda user: user.is_active)
 def resources(request):
-    pass
+    return HttpResponse('resources')
 
 
+@user_passes_test(lambda user: user.is_active)
 def scores(request):
-    pass
+    return HttpResponse('scores')
 
 
+@user_passes_test(lambda user: user.is_active)
 def competitions(request):
-    pass
+    return HttpResponse('competitions')

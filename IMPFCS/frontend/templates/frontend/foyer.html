@@ -11,13 +11,34 @@
 </head>
 
 <body>
-  <h2>News<h2><br />
-  <a class="btn btn-primary" href="{% url 'frontend:profile' %}">profile</a><br />
-  <a class="btn btn-primary" href="{% url 'frontend:message' %}">message</a><br />
-  <a class="btn btn-primary" href="{% url 'frontend:resources' %}">resources</a><br />
-  <a class="btn btn-primary" href="{% url 'frontend:scores' %}">scores(for team members)</a><br />
-  <a class="btn btn-primary" href="{% url 'frontend:competitions' %}">competitions(for team members)</a><br />
-  <a class="btn btn-primary" href="{% url 'frontend:logout' %}">logout</a><br />
+
+  <table>
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+        <td><h2>News<h2></td>
+      </tr>
+      <tr>
+        <td><a class="btn btn-primary" href="{% url 'frontend:profile' %}">profile</a></td>
+      </tr>
+      <tr>
+        <td><a class="btn btn-primary" href="{% url 'frontend:message' %}">message</a></td>
+      </tr>
+      <tr>
+        <td><a class="btn btn-primary" href="{% url 'frontend:resources' %}">resources</a><br /></td>
+      </tr>
+      <tr>
+        <td><a class="btn btn-primary" href="{% url 'frontend:scores' %}">scores(for team members)</a></td>
+      </tr>
+      <tr>
+        <td><a class="btn btn-primary" href="{% url 'frontend:competitions' %}">competitions(for team members)</a></td>
+      </tr>
+      <tr>
+        <td><a class="btn btn-primary" href="{% url 'frontend:logout' %}">logout</a></td>
+      </tr>
+    </tbody>
+  </table>
 
 
 </body>
