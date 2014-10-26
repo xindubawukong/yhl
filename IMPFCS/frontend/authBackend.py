@@ -5,6 +5,19 @@ from django.core.urlresolvers import reverse
 from urllib2 import urlopen, Request
 from urllib import urlencode
 import json
+from django.http import HttpRequest, HttpResponse
+
+
+def auth(request):
+    try:
+        username = request.POST['username']
+        password = request.POST['password']
+    except KeyError:
+        raise Http404
+    if username.isdigit() and len(username) == 10:
+        return HttpResponse(json.dumps({'valid': True}))
+    else:
+        return HttpResponse(json.dumps({'valid': False}))
 
 
 class THUAuthBackend(ModelBackend):
@@ -21,12 +34,10 @@ class THUAuthBackend(ModelBackend):
                     return None
         except User.DoesNotExist:
             pass
-        import THU_auth.views
-        from django.http import HttpRequest
         request = HttpRequest()
         request.POST['username'] = username
         request.POST['password'] = password
-        response = THU_auth.views.auth(request)
+        response = auth(request)
         #####################################
         ret = json.loads(response.content)
         if ret['valid'] == False:  #valid Tsinghua account

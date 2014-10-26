@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'frontend',
-    'THU_auth',
 )
 
 AUTHENTICATION_BACKENDS = ('frontend.authBackend.THUAuthBackend',)

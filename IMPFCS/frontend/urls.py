@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     url(r'^resources/$', views.resources, name='resources'),
     url(r'^scores/$', views.scores, name='scores'),
     url(r'^competitions/$', views.competitions, name='competitions'),
+    url(r'^applyTeam/$', views.applyTeam, name='applyTeam'),
 )

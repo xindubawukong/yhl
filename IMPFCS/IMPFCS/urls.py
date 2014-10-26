@@ -11,5 +11,4 @@ urlpatterns = patterns('',
     url(r'^$', lambda request: HttpResponseRedirect(reverse('frontend:foyer'))),
     url(r'^site/', include('frontend.urls', namespace='frontend')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^auth/$', include('THU_auth.urls', namespace='THU_auth')),
 )

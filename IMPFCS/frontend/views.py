@@ -80,3 +80,8 @@ def scores(request):
 @user_passes_test(lambda user: user.is_active)
 def competitions(request):
     return HttpResponse('competitions')
+
+
+@user_passes_test(lambda user: user.is_active)
+def applyTeam(request):
+    return HttpResponse('applyTeam')

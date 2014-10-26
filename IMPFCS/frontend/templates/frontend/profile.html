@@ -15,19 +15,30 @@
     <h1>Profile</h1>
 
     <dl>
-        <dt>学号:</dt>
+        <dt>学号</dt>
         <dd>{{ user.username }}<dd>
-        <dt>姓名:</dt>
+        <dt>姓名</dt>
         <dd>{{ user.userinfo.name }}</dd>
-        <dt>性别:</dt>
+        <dt>性别</dt>
         <dd>{{ user.userinfo.gender }}</dd>
-        <dt>院系:</dt>
+        <dt>院系</dt>
         <dd>{{ user.userinfo.department }}</dd>
-        <dt>班级:</dt>
+        <dt>班级</dt>
         <dd>{{ user.userinfo.studentClass }}</dd>
+        <dt>是否为代表队成员</dt>
+        <dd>{{ user.userinfo.is_teamMember }}</dd>
     </dl>
 
+    <br />
+    <br />
+    <a class="btn btn-primary" id='apply-team'>申请加入代表队</a>
+    <br />
+    <br />
+    <a class="btn btn-primary" id='edit-save'>编辑</a>
+    <br />
+    <br />
     <a class="btn btn-primary" href="{% url 'frontend:logout' %}">Logout</a>
+
 
 </body>
 
