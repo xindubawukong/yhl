@@ -36,7 +36,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'frontend',
 )
+
+AUTHENTICATION_BACKENDS = ('frontend.authBackend.THUAuthBackend',)
+
+LOGIN_URL = '/site/login'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

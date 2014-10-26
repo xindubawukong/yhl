@@ -1,0 +1,45 @@
+{% load staticfiles %}
+
+<html>
+
+<head>
+  <title>Profile</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Loading Flat UI -->
+  <link rel="stylesheet" href="{% static 'frontend/css/flat-ui.css' %}" />
+</head>
+
+<body>
+
+    <h1>Profile</h1>
+
+    <dl>
+        <dt>学号</dt>
+        <dd>{{ user.username }}<dd>
+        <dt>姓名</dt>
+        <dd>{{ user.userinfo.name }}</dd>
+        <dt>性别</dt>
+        <dd>{{ user.userinfo.gender }}</dd>
+        <dt>院系</dt>
+        <dd>{{ user.userinfo.department }}</dd>
+        <dt>班级</dt>
+        <dd>{{ user.userinfo.studentClass }}</dd>
+        <dt>是否为代表队成员</dt>
+        <dd>{{ user.userinfo.is_teamMember }}</dd>
+    </dl>
+
+    <br />
+    <br />
+    <a class="btn btn-primary" id='apply-team'>申请加入代表队</a>
+    <br />
+    <br />
+    <a class="btn btn-primary" id='edit-save'>编辑</a>
+    <br />
+    <br />
+    <a class="btn btn-primary" href="{% url 'frontend:logout' %}">Logout</a>
+
+
+</body>
+
+</html>
