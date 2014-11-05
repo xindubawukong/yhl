@@ -232,7 +232,6 @@ def listMyApplies(request):
         'state',
         'ctime'}, ...]}
     """
-    print "wow"
     if request.method == 'GET':
         user = request.user
         if user is None:
