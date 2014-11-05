@@ -20,7 +20,7 @@ def loginUser(request):
                 login(request, user)
                 if user.is_active:
                     return HttpResponseRedirect(reverse('frontend:foyer'))
-                else:  
+                else:
                     return render(request, 'frontend/completeInfo.html', {'user' : user})
             else:
                 return render(request, 'frontend/login.html', {'errorMsg' : 'Invalid username or password.'})
@@ -39,7 +39,7 @@ def logoutUser(request):
 def completeInfo(request):
     user = request.user
     user.userinfo = UserInfo(
-        name=request.POST['name'], 
+        name=request.POST['name'],
         gender=request.POST['gender'],
         department=request.POST['department'],
         studentClass=request.POST['studentClass'],
@@ -67,9 +67,11 @@ def message(request):
     return HttpResponse('message')
 
 
-@user_passes_test(lambda user: user.is_active)
 def resources(request):
-    return HttpResponse('resources')
+    if request.method == 'GET':
+        return render(request, 'frontend/resources.html', {'user': request.user})
+    else:
+        raise Http404
 
 
 @user_passes_test(lambda user: user.is_active)

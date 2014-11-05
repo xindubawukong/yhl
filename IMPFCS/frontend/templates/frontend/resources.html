@@ -1,0 +1,109 @@
+{% load staticfiles %}
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Resources API Test</title>
+
+		<link href="{% static 'frontend/css/bootstrap.min.css' %}" rel="stylesheet">
+	</head>
+	<body>
+
+		{% include 'frontend/navbar.html' %}
+
+		<br/><br/>
+		<div class="container theme-showcase" role="main">
+
+			<div class="page-header">
+				<h1>Resources</h1>
+			</div>
+
+		<div>
+			<h3>Add Resource</h3>
+			<form action="{% url 'resources:addResource' %}" method="post">
+			{% csrf_token %}
+				<input type="text" value="" placeholder="name" id="name" name="name"/>
+				<input type="text" value="" placeholder="description" id="description" name="description"/>
+				<input type="text" value="" placeholder="dates" id="dates" name="dates"/>
+				<input class="btn btn-primary" type="submit" value="Submit" />
+			</form>
+		</div>
+
+
+		<div>
+			<h3>Cancel Resource</h3>
+			<form action="{% url 'resources:cancelResource' %}" method="post">
+			{% csrf_token %}
+				<input type="text" value="" placeholder="resource_id" id="resource_id" name="resource_id"/>
+				<input class="btn btn-primary" type="submit" value="Submit" />
+			</form>
+		</div>
+
+
+		<div>
+			<h3>Cancel Resource on One Day</h3>
+			<form action="{% url 'resources:cancelResourceOne' %}" method="post">
+			{% csrf_token %}
+				<input type="text" value="" placeholder="resource_one_id" id="resource_one_id" name="resource_one_id"/>
+				<input class="btn btn-primary" type="submit" value="Submit" />
+			</form>
+		</div>
+
+		<div>
+			<h3>List Applies</h3>
+			<form action="{% url 'resources:listApplies' %}" method="get">
+				<input type="text" value="" placeholder="resource_one_id" id="resource_one_id" name="resource_one_id"/>
+				<input class="btn btn-primary" type="submit" value="Submit" />
+			</form>
+		</div>
+
+
+		<div>
+			<h3>Reply Apply</h3>
+			<form action="{% url 'resources:replyApply' %}" method="post">
+			{% csrf_token %}
+				<input type="text" value="" placeholder="apply_id" id="apply_id" name="apply_id"/>
+				<input type="radio" value="true" name="accept">Accept</input>
+				<input type="radio" value="false" name="accept">Deny</input>
+				<input type="text" value="" placeholder="explanation" id="explanation" name="explanation"/>
+				<input class="btn btn-primary" type="submit" value="Submit" />
+			</form>
+		</div>
+
+
+		<div>
+			<h3>List Resources</h3>
+			<a class="btn btn-primary" href="{% url 'resources:listResources' %}">List</a>
+		</div>
+
+		<div>
+			<h3>View Resource</h3>
+			<form action="{% url 'resources:viewResource' %}" method="get">
+				<input type="text" value="" placeholder="resource_id" id="resource_id" name="resource_id"/>
+				<input class="btn btn-primary" type="submit" value="Submit" />
+			</form>
+		</div>
+
+		<div>
+			<h3>Apply Resource</h3>
+			<form action="{% url 'resources:applyResource' %}" method="post">
+			{% csrf_token %}
+				<input type="text" value="" placeholder="resource_one_id" id="resource_one_id" name="resource_one_id"/>
+				<input type="text" value="" placeholder="contact_info" id="contact_info" name="contact_info"/>
+				<input type="text" value="" placeholder="reason" id="reason" name="reason"/>
+				<input class="btn btn-primary" type="submit" value="Submit" />
+			</form>
+		</div>
+
+		<div>
+			<h3>List My Applies</h3>
+			<a class="btn btn-primary" href="{% url 'resources:listMyApplies' %}">List</a>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
+	</body>
+
+</html>

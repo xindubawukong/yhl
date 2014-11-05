@@ -1,45 +1,52 @@
 {% load staticfiles %}
 
 <html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-  <title>Profile</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Loading Flat UI -->
-  <link rel="stylesheet" href="{% static 'frontend/css/flat-ui.css' %}" />
-</head>
+		<title>Profile</title>
 
-<body>
+		<link href="{% static 'frontend/css/bootstrap.min.css' %}" rel="stylesheet">
+	</head>
+	<body>
 
-    <h1>Profile</h1>
+		{% include 'frontend/navbar.html' %}
 
-    <dl>
-        <dt>学号</dt>
-        <dd>{{ user.username }}<dd>
-        <dt>姓名</dt>
-        <dd>{{ user.userinfo.name }}</dd>
-        <dt>性别</dt>
-        <dd>{{ user.userinfo.gender }}</dd>
-        <dt>院系</dt>
-        <dd>{{ user.userinfo.department }}</dd>
-        <dt>班级</dt>
-        <dd>{{ user.userinfo.studentClass }}</dd>
-        <dt>是否为代表队成员</dt>
-        <dd>{{ user.userinfo.is_teamMember }}</dd>
-    </dl>
+		<br/><br/>
+		<div class="container theme-showcase" role="main">
 
-    <br />
-    <br />
-    <a class="btn btn-primary" id='apply-team'>申请加入代表队</a>
-    <br />
-    <br />
-    <a class="btn btn-primary" id='edit-save'>编辑</a>
-    <br />
-    <br />
-    <a class="btn btn-primary" href="{% url 'frontend:logout' %}">Logout</a>
+			<div class="page-header">
+				<h1>Profile</h1>
+			</div>
 
+		<div>
+			<h3>学号</h3>
+			<p>{{ user.username }}</p>
+			<h3>姓名</h3>
+			<p>{{ user.userinfo.name }}</p>
+			<h3>性别</h3>
+			<p>{{ user.userinfo.gender }}</p>
+			<h3>院系</h3>
+			<p>{{ user.userinfo.department }}</p>
+			<h3>班级</h3>
+			<p>{{ user.userinfo.studentClass }}</p>
+			<h3>是否为代表队成员</h3>
+			<p>{{ user.userinfo.is_teamMember }}</p>
+		</div>
 
-</body>
+		<br />
+		<br />
+		<a class="btn btn-primary" id='apply-team'>申请加入代表队</a>
+		<br />
+		<br />
+		<a class="btn btn-primary" id='edit-save'>编辑</a>
+		<br />
+		<br />
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
+	</body>
 
 </html>
