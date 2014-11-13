@@ -5,15 +5,99 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>title here</title>
+		<title>清华大学体育信息平台</title>
 
 		<link href="{% static 'frontend/css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'frontend/css/foyer.css' %}" rel="stylesheet">
 	</head>
 	<body>
 
 		{% include 'frontend/navbar.html' %}
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<div class="tile-container">
+			<div class="tiles-left">
+				<div class="tile">
+					<div class="tile-head">
+						<h3>通知</h3>
+					</div>
+					<div class="tile-content">
+						<p>news 1</p>
+						<p>news 2</p>
+						<p>news 3</p>
+					</div>
+				</div>
+			</div>
+			<div class="tiles-right">
+				<div class="tile">
+					<div class="profile-head">
+						<img class="avatar" src="{% static 'frontend/img/avatar.jpg' %}"></img>
+						<h4>{{ user.userinfo.name }}</h4>
+					</div>
+					<div class="profile-content">
+						<table class="table">
+							<tr><td>学号</td><td>{{ user.username }}</td></tr>
+							<tr><td>性别</td><td>{{ user.userinfo.gender }}</td></tr>
+							<tr><td>院系</td><td>{{ user.userinfo.department }}</td></tr>
+							<tr><td>班级</td><td>{{ user.userinfo.studentClass }}</td></tr>
+							<tr><td colspan='2'>是否为代表队成员:
+									{% if user.userinfo.is_teamMember %}是
+									{% else %}否
+									{% endif %}
+							</td></td>
+						</table>
+					</div>
+					<div class="profile-foot">
+						<a class="btn btn-primary">申请加入代表队</a>
+						<a class="btn btn-primary" data-toggle="modal" data-target="#editModal">编辑个人资料</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog edit-modal">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">编辑个人资料</h4>
+					</div>
+					<div class="modal-body">
+						<form action="" method="post" role="form">
+							{% csrf_token %}
+							<div class="form-group">
+							<label class="control-label">姓名</label> <input type="text" name="name" class="form-control"/>
+							</div>
+							<div class="form-group">
+								<label>性别</label>
+								<div>
+								<label class="radio-inline"> <input type="radio" name="gender" value="男" checked="checked" id="input-gender">男</label>
+								<label class="radio-inline"> <input type="radio" name="gender" value="女" id="input-gender">女</label>
+								</div>
+							</div>
+							<div class="form-group">
+							<label for="department">院系</label>
+							<select id="department" name="department" class="form-control">
+								<option value=""> </option>
+								<option value="电子工程系">电子工程系</option>
+								<option value="计算机科学与技术系">计算机科学与技术系</option>
+							</select>
+							</div>
+							<div class="form-group">
+							<label for="studentClass">班级</label> <input type="text" name="studentClass" class="form-control" />
+							</div>
+							<div class="form-group">
+							<input class="btn btn-primary" type="submit", value="提交" />
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
 		<script src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
 	</body>
 </html>
