@@ -70,7 +70,8 @@ def message(request):
 
 def resources(request):
     if request.method == 'GET':
-        return render(request, 'frontend/resources.html', {'user': request.user})
+        return render(request, 'frontend/resources.html', {'user':
+            request.user, 'sidebar_select': 3})
     else:
         raise Http404
 

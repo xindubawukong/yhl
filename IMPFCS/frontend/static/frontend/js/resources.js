@@ -11,13 +11,40 @@ function resetTimelinr() {
   });
 }
 
+function requestListMyApplies() {
+  $.ajax({
+    type: "get",
+    dataType: "json",
+    url: "/api/resources/apply/list",
+    success: function(msg) {
+      if (msg.applies) {
+        $.each(msg.applies, function(i, n) {
+          var time = n.resource_one.year + "-" + n.resource_one.month + "-" + n.resource_one.day;
+          var state = "<span class=\"label ";
+          if (n.state == "accepted") {
+            state += "label-success";
+          } else if (n.state == "denied") {
+            state += "label-important";
+          } else {
+            state += "";
+          }
+          state += "\">" + n.state + "</span>"
+          $("#myApplies").append("<tr><td>" + n.resource.name + "</td><td>" + time + "</td><td>" + state + "</td><td>" + n.ctime + "</td></tr>");
+        });
+      }
+    }
+  });
+}
+
 function requestListResources() {
   $.ajax({
     type: "get",
     dataType: "json",
     url: "/api/resources/list",
     success: function(msg) {
-      fillTable(msg);
+      if (msg.resources) {
+        fillTable(msg);
+      }
     }
   })
 }
@@ -56,10 +83,26 @@ function viewResource(rid, roid) {
       $.each(msg.resource_ones, function(i, n) {
         if (n.resource_one_id == roid) {
           $("#resourceDate").text(n.year + "年" + n.month + "月" + n.day + "日");
-          // TODO onclick
+          $("#resource_one_id").val(roid);
         }
       })
       $("#viewResourceModal").modal();
     }
   })
+}
+
+function submitApply() {
+  $.ajax({
+    type: "POST",
+    url: "/api/resources/apply/",
+    data: $('#applyForm').serialize(),
+    success: function(data) {
+      if (data.success == 1) {
+        alert("申请信息已发送!");
+        location.reload();
+      } else {
+        alert("申请失败！" + data.error);
+      }
+    }
+  });
 }
