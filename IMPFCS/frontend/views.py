@@ -59,7 +59,8 @@ def profile(request):
 def foyer(request):
     if request.user.is_superuser:
         return HttpResponseRedirect('/admin/')
-    return render(request, 'frontend/foyer.html', {'user': request.user})
+    return render(request, 'frontend/foyer.html', {'user': request.user,
+        'sidebar_select': 0})
 
 
 @user_passes_test(lambda user: user.is_active)
