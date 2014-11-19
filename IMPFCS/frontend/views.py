@@ -82,7 +82,7 @@ def scores(request):
 
 @user_passes_test(lambda user: user.is_active)
 def competitions(request):
-    return HttpResponse('competitions')
+      return render(request, 'frontend/competitions.html', {'user': request.user, 'sidebar_select': 1})
 
 
 @user_passes_test(lambda user: user.is_active)
