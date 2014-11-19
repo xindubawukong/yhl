@@ -11,6 +11,11 @@ datesPattern = re.compile(r'^(\d\d\d\d\-\d\d\-\d\d;)*\d\d\d\d\-\d\d\-\d\d')
 def _json_response(data):
     return HttpResponse(json.dumps(data), content_type="application/json")
 
+def _check_superuser(user):
+    return (user is not None) and (user.is_superuser())
+
+def _check_login(user):
+    return user is not None
 
 def addResource(request):
     """
@@ -21,7 +26,9 @@ def addResource(request):
     {'error': reason}.
     """
     if request.method == 'POST':
-        # TODO check permission
+        user = request.user
+        if not _check_superuser(request.user):
+            return _json_response({'error': 'Permission denied'})
         name = request.POST['name']
         description = request.POST['description']
         dates = request.POST['dates']
@@ -47,7 +54,8 @@ def cancelResource(request):
     {'success': 1, 'resource_id'} or {'error': reason}.
     """
     if request.method == 'POST':
-        # TODO check permission
+        if not _check_superuser(request.user):
+            return _json_response({'error': 'Permission denied'})
         resource_id = request.POST['resource_id']
         if (resource_id is None) or (resource_id.strip() == ''):
             return _json_response({'error': 'Missing necessary fields'})
@@ -66,7 +74,8 @@ def cancelResourceOne(request):
     {'success': 1, 'resource_one_id'} or {'error': reason}.
     """
     if request.method == 'POST':
-        #TODO check permission
+        if not _check_superuser(request.user):
+            return _json_response({'error': 'Permission denied'})
         resource_one_id = request.POST['resource_one_id']
         if (resource_one_id is None) or (resource_one_id.strip() == ''):
             return _json_response({'error': 'Missing necessary fields'})
@@ -96,7 +105,8 @@ def listApplies(request):
         'ctime'}, ...]}
     """
     if request.method == 'GET':
-        #TODO check permission
+        if not _check_superuser(request.user):
+            return _json_response({'error': 'Permission denied'})
         resource_one_id = request.GET.get('resource_one_id')
         if (resource_one_id is None) or (resource_one_id.strip() == ''):
             resource_one_id = ''
@@ -114,7 +124,8 @@ def replyApply(request):
     returns {'success': 1, 'apply_id'} or {'error': reason}.
     """
     if request.method == 'POST':
-        # TODO check permission
+        if not _check_superuser(request.user):
+            return _json_response({'error': 'Permission denied'})
         apply_id = request.POST['apply_id']
         accept = request.POST['accept']
         explanation = request.POST['explanation']
@@ -151,7 +162,8 @@ def listResources(request):
     Monday.
     """
     if request.method == 'GET':
-        #TODO check permission
+        if not _check_login(request.user):
+            return _json_response({'error': 'Permission denied'})
         year = request.GET.get('year')
         month = request.GET.get('month')
         showall = request.GET.get('showall')
@@ -182,7 +194,8 @@ def viewResource(request):
     [{'resource_one_id', 'year', 'month', 'day', 'state'}, ...]}
     """
     if request.method == 'GET':
-        #TODO check permission
+        if not _check_login(request.user):
+            return _json_response({'error': 'Permission denied'})
         resource_id = request.GET.get('resource_id')
         if (resource_id is None) or (resource_id.strip() == ''):
             return _json_response({'error': 'Missing necessary fields'})
@@ -199,9 +212,8 @@ def applyResource(request):
     """
     if request.method == 'POST':
         user = request.user
-        if user is None:
-            return _json_response({'error': 'Not logged in'})
-        # TODO check permission
+        if not _check_login(user):
+            return _json_response({'error': 'Permission denied'})
         resource_one_id = request.POST['resource_one_id']
         contact_info = request.POST['contact_info']
         reason = request.POST['reason']
@@ -234,9 +246,8 @@ def listMyApplies(request):
     """
     if request.method == 'GET':
         user = request.user
-        if user is None:
-            return _json_response({'error': 'Not logged in'})
-        #TODO check permission
+        if not _check_login(user):
+            return _json_response({'error': 'Permission denied'})
         res = models.listMyApplies(user.id)
         return _json_response(res)
     else:

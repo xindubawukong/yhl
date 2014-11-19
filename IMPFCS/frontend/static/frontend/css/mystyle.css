@@ -5,3 +5,7 @@
 .page-content .container-fluid {
 	padding-top: 20px;
 }
+
+.container-fluid .span6 {
+	margin-left: 0px;
+}

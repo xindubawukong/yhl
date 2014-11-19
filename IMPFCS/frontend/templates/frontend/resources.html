@@ -1,109 +1,88 @@
 {% load staticfiles %}
 
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+{% include 'frontend/head.html' %}
 
-		<title>Resources API Test</title>
+<link rel="stylesheet" type="text/css" href="{% static 'frontend/css/timeline.css' %}">
+<style type="text/css">
+	#timeline {width: 480px;height: 560px;overflow: hidden;position: relative;background: url("{% static 'frontend/image/dot.gif' %}") 160px top repeat-y;}
+	#dates {width: 150px;height: 640px;overflow: visible;float: left;}
+	#dates li {list-style: none;width: 150px;height: 60px;overflow:visible;line-height: 60px;font-size: 15px; padding-right:20px; text-align:right;}
+	#dates a {line-height: 38px;padding-bottom: 10px;}
+	#dates .selected {font-size: 24px;}
+	#issues {width: 330px;height: 640px; margin-top: 0px;overflow: hidden;float: right;}
+	#issues li {width: 330px;height: 640px;list-style: none;float: left;}
+	#issues li h1 {color: #ffcc00;font-size: 42px; margin: 30px;height:52px; line-height:52px; text-shadow: #000 1px 1px 2px;}
+	#issues li p {font-size: 14px;margin: 30px;line-height: 26px;}
+</style>
 
-		<link href="{% static 'frontend/css/bootstrap.min.css' %}" rel="stylesheet">
-	</head>
-	<body>
 
-		{% include 'frontend/navbar.html' %}
-
-		<br/><br/>
-		<div class="container theme-showcase" role="main">
-
-			<div class="page-header">
-				<h1>Resources</h1>
+<div class="row-fluid">
+	<div class="span6">
+	<div class="portlet">
+		<div class="portlet-title line">
+			<div class="caption"><i class="icon-calendar"></i>浏览资源</div>
+		</div>
+		<div class="portlet-body">
+			<div id="timeline">
+				<ul id="dates" style="height: 800px; margin-top: -428px;">
+					<li><a href="#2005" class="">11.1</a></li>
+				</ul>
+				<ul id="issues" style="height: 3520px; margin-top: -2640px;">
+					<li id="2005" class="" style="opacity: 0.2;">
+					<h1>11.1 篮球</h1>
+					<p>综体</p>
+					<p>嗷嗷嗷</p>
+					</li>
+				</ul>
+				<a href="#" id="next" style="display: inline;"></a> <!-- optional -->
+				<a href="#" id="prev" style="display: inline;"></a> <!-- optional -->
 			</div>
-
-		<div>
-			<h3>Add Resource</h3>
-			<form action="{% url 'resources:addResource' %}" method="post">
-			{% csrf_token %}
-				<input type="text" value="" placeholder="name" id="name" name="name"/>
-				<input type="text" value="" placeholder="description" id="description" name="description"/>
-				<input type="text" value="" placeholder="dates" id="dates" name="dates"/>
-				<input class="btn btn-primary" type="submit" value="Submit" />
-			</form>
+			</div>
 		</div>
+	</div>
 
-
-		<div>
-			<h3>Cancel Resource</h3>
-			<form action="{% url 'resources:cancelResource' %}" method="post">
-			{% csrf_token %}
-				<input type="text" value="" placeholder="resource_id" id="resource_id" name="resource_id"/>
-				<input class="btn btn-primary" type="submit" value="Submit" />
-			</form>
+	<div class="span5">
+	<div class="portlet">
+		<div class="portlet-title line">
+			<div class="caption"><i class="icon-bell"></i>我的申请</div>
 		</div>
-
-
-		<div>
-			<h3>Cancel Resource on One Day</h3>
-			<form action="{% url 'resources:cancelResourceOne' %}" method="post">
-			{% csrf_token %}
-				<input type="text" value="" placeholder="resource_one_id" id="resource_one_id" name="resource_one_id"/>
-				<input class="btn btn-primary" type="submit" value="Submit" />
-			</form>
+		<div class="portlet-body">
+			<table class="table">
+				<tr><td>资源</td><td>时间</td><td>状态</td></tr>
+				<tr><td>气膜馆</td><td>2014-12-01</td><td>批准<br/>请准时到达登记</td></tr>
+				<tr><td>综体</td><td>2014-12-02</td><td>拒绝<br/>资源已被分配</td></tr>
+			</table>
 		</div>
+	</div>
+	</div>
+</div>
 
-		<div>
-			<h3>List Applies</h3>
-			<form action="{% url 'resources:listApplies' %}" method="get">
-				<input type="text" value="" placeholder="resource_one_id" id="resource_one_id" name="resource_one_id"/>
-				<input class="btn btn-primary" type="submit" value="Submit" />
-			</form>
-		</div>
+<div id="viewResourceModal" class="modal hide fade in" style="display: none; ">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal"></a>
+		<h3>资源详情</h3>
+	</div>
+	<div class="modal-body">
+		<h4 id="resourceName">name</h4>
+		<p id="resourceDescription">desc</p>
+		<p id="resourceDate">time</p>
+		<hr>
+		<h4>申请资源</h4>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn blue">提交申请</a>
+		<a href="#" class="btn" data-dismiss="modal">取消</a>
+	</div>
+</div>
 
+{% include 'frontend/foot.html' %}
 
-		<div>
-			<h3>Reply Apply</h3>
-			<form action="{% url 'resources:replyApply' %}" method="post">
-			{% csrf_token %}
-				<input type="text" value="" placeholder="apply_id" id="apply_id" name="apply_id"/>
-				<input type="radio" value="true" name="accept">Accept</input>
-				<input type="radio" value="false" name="accept">Deny</input>
-				<input type="text" value="" placeholder="explanation" id="explanation" name="explanation"/>
-				<input class="btn btn-primary" type="submit" value="Submit" />
-			</form>
-		</div>
+<script type="text/javascript" src="{% static 'frontend/js/jquery.timelinr.js' %}"></script>
+<script type="text/javascript" src="{% static 'frontend/js/resources.js' %}"></script>
+<script type="text/javascript">
+$(function(){
+	resetTimelinr()
+	requestListResources();
+});
+</script>
 
-
-		<div>
-			<h3>List Resources</h3>
-			<a class="btn btn-primary" href="{% url 'resources:listResources' %}">List</a>
-		</div>
-
-		<div>
-			<h3>View Resource</h3>
-			<form action="{% url 'resources:viewResource' %}" method="get">
-				<input type="text" value="" placeholder="resource_id" id="resource_id" name="resource_id"/>
-				<input class="btn btn-primary" type="submit" value="Submit" />
-			</form>
-		</div>
-
-		<div>
-			<h3>Apply Resource</h3>
-			<form action="{% url 'resources:applyResource' %}" method="post">
-			{% csrf_token %}
-				<input type="text" value="" placeholder="resource_one_id" id="resource_one_id" name="resource_one_id"/>
-				<input type="text" value="" placeholder="contact_info" id="contact_info" name="contact_info"/>
-				<input type="text" value="" placeholder="reason" id="reason" name="reason"/>
-				<input class="btn btn-primary" type="submit" value="Submit" />
-			</form>
-		</div>
-
-		<div>
-			<h3>List My Applies</h3>
-			<a class="btn btn-primary" href="{% url 'resources:listMyApplies' %}">List</a>
-		</div>
-
-		<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-		<script src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
-	</body>
-
-</html>

@@ -137,7 +137,8 @@ def listResources(year, month, showall):
             'name': resource['name'],
             'state': resource_one['state']
             })
-    return {'resources': resources, 'days': days, 'first_day': first_day}
+    return {'resources': resources, 'days': days, 'first_day': first_day,
+            'year': year, 'month': month}
 
 
 def viewResource(resource_id):
