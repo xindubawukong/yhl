@@ -77,7 +77,7 @@ def resources(request):
 
 @user_passes_test(lambda user: user.is_active)
 def scores(request):
-    return HttpResponse('scores')
+    return render(request, 'frontend/scores.html', {'user': request.user, 'sidebar_select': 2})
 
 
 @user_passes_test(lambda user: user.is_active)
