@@ -82,15 +82,6 @@ def resources(request):
         raise Http404
 
 
-@user_passes_test(lambda user: user.is_superuser)
-def manageResources(request):
-    if request.method == 'GET':
-        return render(request, 'frontend/manage/resources.html', {'user':
-            request.user, 'sidebar_select': 3 })
-    else:
-        raise Http404
-
-
 @user_passes_test(lambda user: user.is_active)
 def scores(request):
     return render(request, 'frontend/scores.html', {'user': request.user,
@@ -120,13 +111,27 @@ def applyTeam(request):
     return HttpResponseRedirect(reverse('frontend:profile'))
 
 
+@user_passes_test(lambda user: user.is_superuser)
 def userManagement(request):
-    return render(request, 'frontend/userManagement.html', {'sidebar_select': 4})
+    if request.method == 'GET':
+        return render(request, 'frontend/userManagement.html', {'user':
+            request.user, 'sidebar_select': 4 })
+    else:
+        raise Http404
 
-
+@user_passes_test(lambda user: user.is_superuser)
 def resourceManagement(request):
-    return render(request, 'frontend/resourceManagement.html', {'sidebar_select': 5})
+    if request.method == 'GET':
+        return render(request, 'frontend/resourceManagement.html', {'user':
+            request.user, 'sidebar_select': 3 })
+    else:
+        raise Http404
 
 
+@user_passes_test(lambda user: user.is_superuser)
 def scoreManagement(request):
-    return render(request, 'frontend/scoreManagement.html', {'sidebar_select': 6})
+    if request.method == 'GET':
+        return render(request, 'frontend/scoreManagement.html', {'user':
+            request.user, 'sidebar_select': 3 })
+    else:
+        raise Http404
