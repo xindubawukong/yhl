@@ -38,16 +38,22 @@ def logoutUser(request):
 
 def completeInfo(request):
     user = request.user
-    user.userinfo = UserInfo(
-        name=request.POST['name'],
-        gender=request.POST['gender'],
-        department=request.POST['department'],
-        studentClass=request.POST['studentClass'],
-    )
+    if user.is_active:
+        user.userinfo.name = request.POST['name']
+        user.userinfo.gender = request.POST['gender']
+        user.userinfo.department = request.POST['department']
+        user.userinfo.studentClass = request.POST['studentClass']
+    else:
+        user.userinfo = UserInfo(
+            name=request.POST['name'],
+            gender=request.POST['gender'],
+            department=request.POST['department'],
+            studentClass=request.POST['studentClass'],
+        )
+        user.is_active = True
     user.userinfo.save()
-    user.is_active = True
     user.save()
-    return HttpResponseRedirect(reverse('frontend:foyer'))
+    return HttpResponseRedirect(reverse('frontend:profile'))
 
 
 @user_passes_test(lambda user: user.is_active)
@@ -99,4 +105,20 @@ def competitions(request):
 
 @user_passes_test(lambda user: user.is_active)
 def applyTeam(request):
-    return HttpResponse('applyTeam')
+    user = request.user
+    user.is_applyingTeam = True
+    user.userinfo.teamCategory = request.POST['teamCategory']
+    user.userinfo.teamRole = request.POST['teamRole']
+    user.userinfo.teamName = request.POST['teamName']
+    user.userinfo.coach = request.POST['coach']
+    user.userinfo.birth = request.POST['birth']
+    user.userinfo.politicalBackground = request.POST['politicalBackground']
+    user.userinfo.phoneNum = request.POST['phoneNum']
+    user.userinfo.email = request.POST['email']
+    user.userinfo.address = request.POST['address']
+    user.userinfo.work = request.POST['work']
+    return HttpResponseRedirect(reverse('frontend:profile'))
+
+
+def userManagement(request):
+    return render(request, 'frontend/userManagement.html', {'sidebar_select': 4})

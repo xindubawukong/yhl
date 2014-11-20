@@ -67,7 +67,8 @@
 						{% ifequal sidebar_select  0 %}<span class="selected"></span>{% endifequal %}
 					</a>
 				</li>
-				{% if user.userinfo.is_teamMember or user.is_superuser %}
+
+				{% if user.userinfo.is_teamMember and not user.is_superuser %}
 				
 				<li class="start {% ifequal sidebar_select 1 %} active {% endifequal %}">
 					<a href="{% url 'frontend:competitions' %}">
@@ -85,6 +86,9 @@
 				</li>
 			
 				{% endif %}
+
+				{% if not user.is_superuser %}
+
 				<li class="start {% ifequal sidebar_select 3 %} active {% endifequal %}">
 				<a href="{% url 'frontend:resources' %}">
 						<i class="icon-home"></i>
@@ -92,6 +96,33 @@
 						{% ifequal sidebar_select 3 %}<span class="selected"></span>{% endifequal %}
 					</a>
 				</li>
+
+				{% endif %}
+
+				{% if user.is_superuser %}
+				<li class="start {% ifequal sidebar_select 4 %} active {% endifequal %}">
+					<a href="{% url 'frontend:userManagement' %}">
+						<i class="icon-home"></i>
+						<span class="title">用户管理</span>
+						{% ifequal sidebar_select 4 %}<span class="selected"></span>{% endifequal %}
+					</a>
+				</li>
+				<li class="start {% ifequal sidebar_select 5 %} active {% endifequal %}">
+					<a href="{% url 'frontend:resourceManagement' %}">
+						<i class="icon-home"></i>
+						<span class="title">资源管理</span>
+						{% ifequal sidebar_select 5 %}<span class="selected"></span>{% endifequal %}
+					</a>
+				</li>
+				<li class="start {% ifequal sidebar_select 6 %} active {% endifequal %}">
+					<a href="{% url 'frontend:resourceManagement' %}">
+						<i class="icon-home"></i>
+						<span class="title">成绩管理</span>
+						{% ifequal sidebar_select 6 %}<span class="selected"></span>{% endifequal %}
+					</a>
+				</li>	
+				{% endif %}
+
 			</ul>
 		</div>
 		<div class="page-content">

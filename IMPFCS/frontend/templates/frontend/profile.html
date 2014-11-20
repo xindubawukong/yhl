@@ -3,6 +3,8 @@
 
 {% include 'frontend/head.html' %}
 
+<link href="{% static 'frontend/css/datepicker.css' %}" rel="stylesheet" type="text/css"/>
+
 <!-- BEGIN BODY -->
 
 <body class="page-header-fixed">
@@ -87,8 +89,8 @@
 
 											<!-- BEGIN FORM-->
 
-											<form action="#" class="form-horizontal">
-
+											<form action="{% url 'frontend:completeInfo' %}" method="post" class="form-horizontal">
+											{% csrf_token %}
 												<div class="control-group">
 
 													<label class="control-label">学号</label>
@@ -104,31 +106,31 @@
 													<label class="control-label">姓名</label>
 
 													<div class="controls">
-														<input type="text" name="fname" value="{{ user.userinfo.name }}" class="m-wrap small" />
+														<input type="text" name="name" value="{{ user.userinfo.name }}" class="m-wrap small" />
 													</div>
 												</div>
 												<div class="control-group">
 													<label class="control-label">性别</label>
 													<div class="controls">
-														{% if user.userinfo.gender == 'female' %}
+														{% if user.userinfo.gender == '女' %}
 														<label class="radio">
-														<input type="radio" name="optionsRadios1" value="option1" />
+														<input type="radio" name="gender" value="男" />
 														男
 														</label>
 														<label class="radio">
-														<input type="radio" name="optionsRadios1" value="option2" checked />
+														<input type="radio" name="gender" value="女" checked />
 														女
 														</label>  
 
 														{% else %}
 
 														<label class="radio">
-														<input type="radio" name="optionsRadios1" value="option1"
+														<input type="radio" name="gender" value="男"
 														checked />
 														男
 														</label>
 														<label class="radio">
-														<input type="radio" name="optionsRadios1" value="option2" />
+														<input type="radio" name="gender" value="女" />
 														女
 														</label> 
 
@@ -136,23 +138,61 @@
 
 													</div>
 												</div>
-											
+									
 												<div class="control-group">
 
 													<label class="control-label">院系</label>
 
 													<div class="controls">
 
-														<select class="small m-wrap" tabindex="1">
+														<select name="department" class="small m-wrap" tabindex="1">
 
-															<option value="Category 1">Category 1</option>
-
-															<option value="Category 2">Category 2</option>
-
-															<option value="Category 3">Category 5</option>
-
-															<option value="Category 4">Category 4</option>
-
+															<option title="" value=""></option>
+															<option title="建筑学院" value="000"> 建筑学院</option>
+															<option title="城规系" value="001"> 城规系</option>
+															<option title="建筑系" value="002"> 建筑系</option>
+															<option title="土木系" value="003"> 土木系</option>
+															<option title="水利系" value="004"> 水利系</option>
+															<option title="环境学院" value="005"> 环境学院</option>
+															<option title="机械系" value="012"> 机械系</option>
+															<option title="精仪系" value="013"> 精仪系</option>
+															<option title="热能系" value="014"> 热能系</option>
+															<option title="汽车系" value="015"> 汽车系</option>
+															<option title="工业工程" value="016"> 工业工程</option>
+															<option title="信息学院" value="021"> 信息学院</option>
+															<option title="电机系" value="022"> 电机系</option>
+															<option title="电子系" value="电子系"> 电子系</option>
+															<option title="计算机系" value="计算机系"> 计算机系</option>
+															<option title="自动化系" value="025"> 自动化系</option>
+															<option title="微纳电子系" value="026"> 微纳电子系</option>
+															<option title="航院" value="031"> 航院</option>
+															<option title="工物系" value="032"> 工物系</option>
+															<option title="化工系" value="034"> 化工系</option>
+															<option title="材料学院" value="035"> 材料学院</option>
+															<option title="理学院" value="041"> 理学院</option>
+															<option title="数学系" value="042"> 数学系</option>
+															<option title="物理系" value="043"> 物理系</option>
+															<option title="化学系" value="044"> 化学系</option>
+															<option title="生命学院" value="045"> 生命学院</option>
+															<option title="交叉信息院" value="047"> 交叉信息院</option>
+															<option title="经管学院" value="051"> 经管学院</option>
+															<option title="公管学院" value="059"> 公管学院</option>
+															<option title="金融学院" value="060"> 金融学院</option>
+															<option title="人文社科学院" value="061"> 人文社科学院</option>
+															<option title="中文系" value="063"> 中文系</option>
+															<option title="外文系" value="064"> 外文系</option>
+															<option title="法学院" value="066"> 法学院</option>
+															<option title="新闻学院" value="067"> 新闻学院</option>
+															<option title="马克思主义学院" value="068"> 马克思主义学院</option>
+															<option title="人文学院" value="069"> 人文学院</option>
+															<option title="社科学院" value="070"> 社科学院</option>
+															<option title="美术学院" value="080"> 美术学院</option>
+															<option title="土水学院" value="090"> 土水学院</option>
+															<option title="建管系" value="091"> 建管系</option>
+															<option title="建筑技术" value="099"> 建筑技术</option>		
+															<option title="医学院" value="400"> 医学院</option>
+															<option title="生医系" value="403"> 生医系</option>
+															<option title="软件学院" value="410"> 软件学院</option>
 														</select>
 
 													</div>
@@ -165,7 +205,7 @@
 
 													<div class="controls">
 
-														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap small" />
+														<input type="text" name="studentClass" value="{{ user.userinfo.studentClass }}" class="m-wrap small" />
 
 													</div>
 												</div>
@@ -187,15 +227,16 @@
 
 											<!-- BEGIN FORM-->
 
-											<form action="#" class="form-horizontal">
-
+											<form action="{% url 'frontend:applyTeam' %}" method="post" class="form-horizontal">
+												{% csrf_token %}
 												<div class="control-group">
 
 													<label class="control-label">队伍类别</label>
 
 													<div class="controls">
 
-														<select class="small m-wrap" tabindex="1">
+														<select name="teamCategory" class="small m-wrap" tabindex="1">
+															<option value=""></option>
 
 															<option value="A">A</option>
 
@@ -212,13 +253,14 @@
 
 													<div class="controls">
 
-														<select class="small m-wrap" tabindex="1">
+														<select name="teamRole" class="small m-wrap" tabindex="1">
+															<option value=""></option>
 
-															<option value="A">队长</option>
+															<option value="队长">队长</option>
 
-															<option value="B">团支书</option>
+															<option value="团支书">团支书</option>
 
-															<option value="C">队员</option>
+															<option value="队员">队员</option>
 
 														</select>
 
@@ -230,7 +272,7 @@
 													<label class="control-label">队名</label>
 
 													<div class="controls">
-														<input type="text" name="fname" class="m-wrap small" />
+														<input type="text" name="teamName" class="m-wrap small" />
 													</div>
 												</div>
 													
@@ -240,18 +282,17 @@
 													<label class="control-label">教练名称</label>
 
 													<div class="controls">
-														<input type="text" name="fname" class="m-wrap small" />
+														<input type="text" name="coach" class="m-wrap small" />
 													</div>
 												</div>
 
+
+
 												<div class="control-group">
 
-													<label class="control-label">出生年月</label>
-
+													<label class="control-label">出生日期</label>
 													<div class="controls">
-
-														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap small" />
-
+														<input class="m-wrap m-ctrl-medium date-picker" type="text" name="birth" data-date-format="yyyy-mm-dd" size="16">
 													</div>
 												</div>
 
@@ -261,7 +302,7 @@
 
 													<div class="controls">
 
-														<select class="small m-wrap" tabindex="1">
+														<select name="politicalBackground" class="small m-wrap" tabindex="1">
 
 															<option value="Category 1"></option>
 
@@ -286,7 +327,7 @@
 
 													<div class="controls">
 
-														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap small" />
+														<input type="text" name="phoneNum" value="{{ user.userinfo.studentClass }}" class="m-wrap small" />
 
 													</div>
 												</div>
@@ -297,7 +338,7 @@
 
 													<div class="controls">
 
-														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap medium" />
+														<input type="text" name="email" value="{{ user.userinfo.studentClass }}" class="m-wrap medium" />
 
 													</div>
 												</div>
@@ -309,7 +350,7 @@
 
 													<div class="controls">
 
-														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap medium" />
+														<input type="text" name="address" value="{{ user.userinfo.studentClass }}" class="m-wrap medium" />
 
 													</div>
 												</div>
@@ -317,7 +358,7 @@
 												<div class="control-group">
 													<label class="control-label">社会工作</label>
 													<div class="controls">
-														<textarea class="medium m-wrap" rows="3"></textarea>
+														<textarea class="medium m-wrap" name="work" rows="3"></textarea>
 													</div>
 												</div>
 
@@ -362,5 +403,12 @@
 	<!-- END CONTAINER -->
 
 {% include 'frontend/foot.html' %}
+<script type="text/javascript" src="{% static 'frontend/js/bootstrap-datepicker.js' %}"></script>
+<script type="text/javascript">
+$(function() {
+	$('.date-picker').datepicker();
+	requestListApplies();
+});
+</script>
 
 </html>

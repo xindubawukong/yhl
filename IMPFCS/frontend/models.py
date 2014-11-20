@@ -25,6 +25,7 @@ class UserInfo(models.Model):
     studentClass = models.CharField(max_length=6, default='')
     
     is_teamMember = models.BooleanField(default=False)
+    is_applyingTeam = models.BooleanField(default=False)
     A = 'A'
     B = 'B'
     C = 'C'
@@ -44,8 +45,9 @@ class UserInfo(models.Model):
         (LEAGUESECRETARY, '团支书'),
         (MAMBER, '队员')
     )
+    teamName = models.CharField(max_length=50, default='')
     teamRole = models.CharField(max_length=5, choices=TEAMROLE_CHOICES, default=MISSING)
-    COACH = models.CharField(max_length=10, default='')
+    coach = models.CharField(max_length=10, default='')
     birth = models.DateField(null=True)
     QUNZHONG = '群众'
     TUANYUAN = '共青团员'
@@ -65,7 +67,7 @@ class UserInfo(models.Model):
     GPA_Rank = [models.CharField(max_length=100, default=''), models.CharField(max_length=100, default='')]
     phoneNum = models.CharField(max_length=20, default='')
     address = models.CharField(max_length=50, default='')
-    work = models.CharField(max_length=200, default='')  #json
+    work = models.CharField(max_length=400, default='')
 
     @staticmethod
     def fields():
