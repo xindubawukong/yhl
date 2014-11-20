@@ -15,4 +15,6 @@ urlpatterns = patterns('',
     url(r'^applyTeam/$', views.applyTeam, name='applyTeam'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^userManagement/$', views.userManagement, name='userManagement'),
+    url(r'^resourceManagement/$', views.resourceManagement, name='resourceManagement'),
+    url(r'^scoreManagement/$', views.scoreManagement, name='scoreManagement'),
 )

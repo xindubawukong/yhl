@@ -122,3 +122,11 @@ def applyTeam(request):
 
 def userManagement(request):
     return render(request, 'frontend/userManagement.html', {'sidebar_select': 4})
+
+
+def resourceManagement(request):
+    return render(request, 'frontend/resourceManagement.html', {'sidebar_select': 5})
+
+
+def scoreManagement(request):
+    return render(request, 'frontend/scoreManagement.html', {'sidebar_select': 6})
