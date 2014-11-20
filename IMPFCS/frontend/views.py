@@ -88,3 +88,12 @@ def competitions(request):
 @user_passes_test(lambda user: user.is_active)
 def applyTeam(request):
     return HttpResponse('applyTeam')
+
+
+@user_passes_test(lambda user: user.is_active)
+def logtest(request):
+    return render(request, 'frontend/logtest.html', {'user': request.user})
+
+@user_passes_test(lambda user: user.is_active)
+def completeInfo_new(request):
+    return render(request, 'frontend/completeInfo_new.html', {'user': request.user})
