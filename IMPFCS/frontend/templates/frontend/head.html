@@ -34,6 +34,7 @@
 							<i class="icon-angle-down"></i>
 						</a>
 						<ul class="dropdown-menu">
+							<li><a href="{% url 'frontend:profile' %}"><i class="icon-key">用户资料</i></a></li>
 							<li><a href="{% url 'frontend:logout' %}"><i class="icon-key"></i>注销</a></li>
 						</ul>
 					</li>
@@ -64,9 +65,11 @@
 						{% ifequal sidebar_select  0 %}<span class="selected"></span>{% endifequal %}
 					</a>
 				</li>
+				{% if user.userinfo.is_teamMember or user.is_superuser %}
+				
 				<li class="start {% ifequal sidebar_select 1 %} active {% endifequal %}">
 					<a href="{% url 'frontend:competitions' %}">
-						<i class="icon-home"></i> <!-- TODO change icon -->
+						<i class="icon-home"></i>
 						<span class="title">比赛</span>
 						{% ifequal sidebar_select 1 %}<span class="selected"></span>{% endifequal %}
 					</a>
@@ -78,6 +81,8 @@
 						{% ifequal sidebar_select 2 %}<span class="selected"></span>{% endifequal %}
 					</a>
 				</li>
+			
+				{% endif %}
 				<li class="start {% ifequal sidebar_select 3 %} active {% endifequal %}">
 				<a href="{% url 'frontend:resources' %}">
 						<i class="icon-home"></i>

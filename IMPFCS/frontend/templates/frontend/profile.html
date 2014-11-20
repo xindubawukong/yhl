@@ -1,52 +1,366 @@
 {% load staticfiles %}
+<!DOCTYPE html>
 
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+{% include 'frontend/head.html' %}
 
-		<title>Profile</title>
+<!-- BEGIN BODY -->
 
-		<link href="{% static 'frontend/css/bootstrap.min.css' %}" rel="stylesheet">
-	</head>
-	<body>
+<body class="page-header-fixed">
 
-		{% include 'frontend/navbar.html' %}
+	<!-- BEGIN CONTAINER -->
 
-		<br/><br/>
-		<div class="container theme-showcase" role="main">
+	<div class="page-container row-fluid">
 
-			<div class="page-header">
-				<h1>Profile</h1>
+		<!-- BEGIN PAGE -->  
+
+		<div class="page-content">
+
+			<!-- BEGIN PAGE CONTAINER-->
+
+			<div class="container-fluid">
+
+				<!-- BEGIN PAGE HEADER-->   
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<h3 class="page-title">
+
+							用户资料
+
+							{% if user.userinfo.is_teamMember %}}
+								<small>代表队成员</small>
+							{% else %}
+								<small>普通用户</small>
+							{% endif %}
+							
+
+						</h3>
+
+					</div>
+
+				</div>
+
+				<!-- END PAGE HEADER-->
+
+				<!-- BEGIN PAGE CONTENT-->
+
+				<div class="row-fluid">
+
+					<div class="span12">
+
+						<!-- BEGIN SAMPLE FORM PORTLET-->   
+
+						<div class="portlet box blue tabbable">
+
+							<div class="portlet-title">
+
+								<div class="caption">
+
+									<i class="icon-reorder"></i>
+
+
+								</div>
+
+							</div>
+
+							<div class="portlet-body form">
+
+								<div class="tabbable portlet-tabs">
+
+									<ul class="nav nav-tabs">
+										{% if user.userinfo.is_teamMember %}
+										<li><a href="#portlet_tab2" data-toggle="tab">代表队成员信息</a></li>
+										{% else %}
+										<li><a href="#portlet_tab2" data-toggle="tab">加入代表队</a></li>
+										{% endif %}
+										
+
+										<li class="active"><a href="#portlet_tab1" data-toggle="tab">基本信息</a></li>
+
+									</ul>
+
+									<div class="tab-content">
+
+										<div class="tab-pane active" id="portlet_tab1">
+
+											<!-- BEGIN FORM-->
+
+											<form action="#" class="form-horizontal">
+
+												<div class="control-group">
+
+													<label class="control-label">学号</label>
+
+													<div class="controls">   
+														<input class="m-wrap medium" readonly type="text" placeholder="{{ user.username }}"disabled />
+
+													</div>
+												</div>
+
+												<div class="control-group">
+
+													<label class="control-label">姓名</label>
+
+													<div class="controls">
+														<input type="text" name="fname" value="{{ user.userinfo.name }}" class="m-wrap small" />
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">性别</label>
+													<div class="controls">
+														{% if user.userinfo.gender == 'female' %}
+														<label class="radio">
+														<input type="radio" name="optionsRadios1" value="option1" />
+														男
+														</label>
+														<label class="radio">
+														<input type="radio" name="optionsRadios1" value="option2" checked />
+														女
+														</label>  
+
+														{% else %}
+
+														<label class="radio">
+														<input type="radio" name="optionsRadios1" value="option1"
+														checked />
+														男
+														</label>
+														<label class="radio">
+														<input type="radio" name="optionsRadios1" value="option2" />
+														女
+														</label> 
+
+														{% endif %}
+
+													</div>
+												</div>
+											
+												<div class="control-group">
+
+													<label class="control-label">院系</label>
+
+													<div class="controls">
+
+														<select class="small m-wrap" tabindex="1">
+
+															<option value="Category 1">Category 1</option>
+
+															<option value="Category 2">Category 2</option>
+
+															<option value="Category 3">Category 5</option>
+
+															<option value="Category 4">Category 4</option>
+
+														</select>
+
+													</div>
+
+												</div>
+
+												<div class="control-group">
+
+													<label class="control-label">班级</label>
+
+													<div class="controls">
+
+														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap small" />
+
+													</div>
+												</div>
+												<div class="form-actions ">
+
+													<button type="submit" class="btn blue"><i class="icon-ok"></i> 更新资料</button>
+
+													<button type="button" class="btn">放弃编辑</button>
+
+												</div>
+
+											</form>
+
+											<!-- END FORM-->  
+
+										</div>
+
+										<div class="tab-pane " id="portlet_tab2">
+
+											<!-- BEGIN FORM-->
+
+											<form action="#" class="form-horizontal">
+
+												<div class="control-group">
+
+													<label class="control-label">队伍类别</label>
+
+													<div class="controls">
+
+														<select class="small m-wrap" tabindex="1">
+
+															<option value="A">A</option>
+
+															<option value="B">B</option>
+
+															<option value="C">C</option>
+
+														</select>
+													</div>
+												</div>
+												
+												<div class="control-group">
+													<label class="control-label">队内职务</label>
+
+													<div class="controls">
+
+														<select class="small m-wrap" tabindex="1">
+
+															<option value="A">队长</option>
+
+															<option value="B">团支书</option>
+
+															<option value="C">队员</option>
+
+														</select>
+
+													</div>
+												</div>
+
+												<div class="control-group">
+
+													<label class="control-label">队名</label>
+
+													<div class="controls">
+														<input type="text" name="fname" class="m-wrap small" />
+													</div>
+												</div>
+													
+
+												<div class="control-group">
+
+													<label class="control-label">教练名称</label>
+
+													<div class="controls">
+														<input type="text" name="fname" class="m-wrap small" />
+													</div>
+												</div>
+
+												<div class="control-group">
+
+													<label class="control-label">出生年月</label>
+
+													<div class="controls">
+
+														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap small" />
+
+													</div>
+												</div>
+
+												<div class="control-group">
+
+													<label class="control-label">政治面貌</label>
+
+													<div class="controls">
+
+														<select class="small m-wrap" tabindex="1">
+
+															<option value="Category 1"></option>
+
+															<option value="Category 2">群众</option>
+
+															<option value="Category 3">共青团员</option>
+
+															<option value="Category 4">积极分子</option>
+
+															<option value="Category 5">预备党员</option>
+
+															<option value="Category 6">党员</option>
+
+														</select>
+
+													</div>
+												</div>
+
+												<div class="control-group">
+
+													<label class="control-label">电话</label>
+
+													<div class="controls">
+
+														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap small" />
+
+													</div>
+												</div>
+
+												<div class="control-group">
+
+													<label class="control-label">邮箱</label>
+
+													<div class="controls">
+
+														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap medium" />
+
+													</div>
+												</div>
+
+
+												<div class="control-group">
+
+													<label class="control-label">住址</label>
+
+													<div class="controls">
+
+														<input type="text" value="{{ user.userinfo.studentClass }}" class="m-wrap medium" />
+
+													</div>
+												</div>
+
+												<div class="control-group">
+													<label class="control-label">社会工作</label>
+													<div class="controls">
+														<textarea class="medium m-wrap" rows="3"></textarea>
+													</div>
+												</div>
+
+												<div class="form-actions ">
+
+													<button type="submit" class="btn blue"><i class="icon-ok"></i> 提交申请</button>
+
+												</div>
+
+											</form>
+
+											<!-- END FORM-->  
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<!-- END SAMPLE FORM PORTLET-->
+
+					</div>
+
+				</div>
+
+				<!-- END PAGE CONTENT-->         
+
 			</div>
 
-		<div>
-			<h3>学号</h3>
-			<p>{{ user.username }}</p>
-			<h3>姓名</h3>
-			<p>{{ user.userinfo.name }}</p>
-			<h3>性别</h3>
-			<p>{{ user.userinfo.gender }}</p>
-			<h3>院系</h3>
-			<p>{{ user.userinfo.department }}</p>
-			<h3>班级</h3>
-			<p>{{ user.userinfo.studentClass }}</p>
-			<h3>是否为代表队成员</h3>
-			<p>{{ user.userinfo.is_teamMember }}</p>
+			<!-- END PAGE CONTAINER-->
+
 		</div>
 
-		<br />
-		<br />
-		<a class="btn btn-primary" id='apply-team'>申请加入代表队</a>
-		<br />
-		<br />
-		<a class="btn btn-primary" id='edit-save'>编辑</a>
-		<br />
-		<br />
-		</div>
+		<!-- END PAGE -->  
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
-	</body>
+	</div>
+
+	<!-- END CONTAINER -->
+
+{% include 'frontend/foot.html' %}
 
 </html>
