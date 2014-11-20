@@ -79,7 +79,7 @@ def listApplies(resource_one_id):
                 'id': user.id,
                 'name': user.userinfo.name,
                 'department': user.userinfo.department,
-                'class': user.userinfo.studentClass,
+                'student_class': user.userinfo.studentClass,
                 'is_team_member': user.userinfo.is_teamMember,
                 'team_category': user.userinfo.teamCategory,
                 'team_role': user.userinfo.teamRole},
@@ -164,6 +164,11 @@ def addApply(resource_one_id, user_id, contact_info, reason):
     if resource_one is None:
         return {'success': False,
                 'reason': 'The resource you apply for does not exist'}
+    count = mclient.db['apply'].find({'user_id': user_id,
+        'resource_one_id': ObjectId(resource_one_id)}).count()
+    if count != 0:
+        return {'success': False,
+                'reason': 'You have already applied'}
     if resource_one['state'] == 'available':
         apply_id = mclient.insert_doc(
                 'apply', {

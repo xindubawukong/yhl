@@ -49,6 +49,10 @@
 	</div>
 </div>
 
+{% if superuser %}
+<a href="{% url 'frontend:manageResources' %}">manage</a>
+{% endif %}
+
 <div id="viewResourceModal" class="modal hide fade in" style="display: none; ">
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal"></a>
@@ -66,11 +70,11 @@
 			<table>
 				<tr>
 					<td><label for="contact_info">联系方式: </label></td>
-					<td><input type="text" name="contact_info" class="form-control"></td>
+					<td><input type="text" id="contact_info" name="contact_info" class="form-control"></td>
 				</tr>
 				<tr>
 					<td><label for="reason">申请理由: </label></td>
-					<td><input type="text" name="reason"></td>
+					<td><input type="text" id="reason" name="reason"></td>
 				</tr>
 			</table>
 			<input type="hidden" id="resource_one_id" name="resource_one_id">

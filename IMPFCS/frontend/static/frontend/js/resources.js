@@ -13,7 +13,7 @@ function resetTimelinr() {
 
 function requestListMyApplies() {
   $.ajax({
-    type: "get",
+    type: "GET",
     dataType: "json",
     url: "/api/resources/apply/list",
     success: function(msg) {
@@ -36,9 +36,34 @@ function requestListMyApplies() {
   });
 }
 
+function requestListApplies() {
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: "/api/resources/manage/apply/list",
+    success: function(msg) {
+      if (msg.applies) {
+        $.each(msg.applies, function(i, n) {
+          var time = n.resource_one.year + "-" + n.resource_one.month + "-" + n.resource_one.day;
+          $("#applies").append("<tr><td>" + n.resource.name +
+              "</td><td>" + time +
+              "</td><td>" + n.user.name +
+              "</td><td>" + n.user.department +
+              "</td><td>" + n.user.student_class +
+              "</td><td>" + n.contact_info +
+              "</td><td>" + n.reason +
+              "</td><td>" + n.ctime +
+              "</td><td><a class=\"btn green\" href=\"javascript:void(0)\" onclick=\"acceptApply('" + n.apply_id + "')\">接受</a>" +
+              "</td><td><a class=\"btn red\" href=\"javascript:void(0)\" onclick=\"denyApply('" + n.apply_id + "')\">拒绝</a></td></tr>");
+        });
+      }
+    }
+  });
+}
+
 function requestListResources() {
   $.ajax({
-    type: "get",
+    type: "GET",
     dataType: "json",
     url: "/api/resources/list",
     success: function(msg) {
@@ -74,7 +99,7 @@ function fillTable(msg) {
 
 function viewResource(rid, roid) {
   $.ajax({
-    type: "get",
+    type: "GET",
     dataType: "json",
     url: "/api/resources/view?resource_id=" + rid,
     success: function(msg) {
@@ -86,6 +111,8 @@ function viewResource(rid, roid) {
           $("#resource_one_id").val(roid);
         }
       })
+      $("#contact_info").val("");
+      $("#reason").val("");
       $("#viewResourceModal").modal();
     }
   })
@@ -106,3 +133,50 @@ function submitApply() {
     }
   });
 }
+
+function addResource() {
+  $.ajax({
+    type: "POST",
+    url: "/api/resources/manage/add/",
+    data: $('#addForm').serialize(),
+    success: function(data) {
+      if (data.success == 1) {
+        alert("添加资源成功!");
+        location.reload();
+      } else {
+        alert("添加失败！" + data.error);
+      }
+    }
+  });
+}
+
+function acceptApply(apply_id) {
+  $.ajax({
+    type: "GET",
+    url: "/api/resources/manage/apply/reply?accept=true&apply_id=" + apply_id,
+    success: function(data) {
+      if (data.success == 1) {
+        alert("回复成功!");
+        location.reload();
+      } else {
+        alert("回复失败！" + data.error);
+      }
+    }
+  });
+}
+
+function denyApply(apply_id) {
+  $.ajax({
+    type: "GET",
+    url: "/api/resources/manage/apply/reply?accept=false&apply_id=" + apply_id,
+    success: function(data) {
+      if (data.success == 1) {
+        alert("回复成功!");
+        location.reload();
+      } else {
+        alert("回复失败！" + data.error);
+      }
+    }
+  });
+}
+
