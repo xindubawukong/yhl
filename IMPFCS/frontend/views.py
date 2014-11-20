@@ -57,8 +57,6 @@ def profile(request):
 
 @user_passes_test(lambda user: user.is_active)
 def foyer(request):
-    if request.user.is_superuser:
-        return HttpResponseRedirect('/admin/')
     return render(request, 'frontend/foyer.html', {'user': request.user,
         'sidebar_select': 0})
 
@@ -68,21 +66,35 @@ def message(request):
     return HttpResponse('message')
 
 
+@user_passes_test(lambda user: user.is_active)
 def resources(request):
     if request.method == 'GET':
-        return render(request, 'frontend/resources.html', {'user': request.user})
+        return render(request, 'frontend/resources.html', {'user':
+            request.user, 'sidebar_select': 3, 'superuser':
+            request.user.is_superuser})
+    else:
+        raise Http404
+
+
+@user_passes_test(lambda user: user.is_superuser)
+def manageResources(request):
+    if request.method == 'GET':
+        return render(request, 'frontend/manage/resources.html', {'user':
+            request.user, 'sidebar_select': 3 })
     else:
         raise Http404
 
 
 @user_passes_test(lambda user: user.is_active)
 def scores(request):
-    return render(request, 'frontend/scores.html', {'user': request.user, 'sidebar_select': 2})
+    return render(request, 'frontend/scores.html', {'user': request.user,
+        'sidebar_select': 2})
 
 
 @user_passes_test(lambda user: user.is_active)
 def competitions(request):
-      return render(request, 'frontend/competitions.html', {'user': request.user, 'sidebar_select': 1})
+      return render(request, 'frontend/competitions.html', {'user':
+          request.user, 'sidebar_select': 1})
 
 
 @user_passes_test(lambda user: user.is_active)

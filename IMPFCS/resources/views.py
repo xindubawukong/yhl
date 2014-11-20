@@ -12,10 +12,10 @@ def _json_response(data):
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 def _check_superuser(user):
-    return (user is not None) and (user.is_superuser())
+    return (user is not None) and (user.is_superuser)
 
-def _check_login(user):
-    return user is not None
+def _check_active(user):
+    return (user is not None) and (user.is_active)
 
 def addResource(request):
     """
@@ -95,9 +95,10 @@ def listApplies(request):
     return all applies for that resource_one, or else return all unreplied
     applies.
     returns {'applies': [{
+        'apply_id',
         'resource': {'resource_id', 'name', 'ctime'},
         'resource_one': {'resource_one_id', 'year', 'month', 'day'},
-        'user': {'id', 'name', 'department', 'class', 'is_team_member',
+        'user': {'id', 'name', 'department', 'student_class', 'is_team_member',
             'team_category', 'team_role'},
         'contact_info',
         'reason',
@@ -119,21 +120,25 @@ def replyApply(request):
     """
     reply to an application, accept one will deny the others of the same
     resource_one.
-    POST takes apply_id, accept(true|false), explanation(can be empty) as
+    GET takes apply_id, accept(true|false), explanation(can be empty) as
     argument.
     returns {'success': 1, 'apply_id'} or {'error': reason}.
     """
-    if request.method == 'POST':
+    if request.method == 'GET':
         if not _check_superuser(request.user):
             return _json_response({'error': 'Permission denied'})
-        apply_id = request.POST['apply_id']
-        accept = request.POST['accept']
-        explanation = request.POST['explanation']
+        if (not request.GET.has_key('apply_id')) or (not
+                request.GET.has_key('accept')) :
+            return _json_response({'error': 'Missing necessary fields'})
+        apply_id = request.GET['apply_id']
+        accept = request.GET['accept']
         if (apply_id is None) or (apply_id.strip() == '') or (
                 accept is None) or (accept.strip() == ''):
             return _json_response({'error': 'Missing necessary fields'})
-        if (explanation is None):
+        if (not request.GET.has_key('explanation')):
             explanation = ''
+        else:
+            explanation = request.GET['explanation']
         if accept == 'true':
             res = models.acceptApply(apply_id, explanation)
         elif accept == 'false':
@@ -162,7 +167,7 @@ def listResources(request):
     Monday.
     """
     if request.method == 'GET':
-        if not _check_login(request.user):
+        if not _check_active(request.user):
             return _json_response({'error': 'Permission denied'})
         year = request.GET.get('year')
         month = request.GET.get('month')
@@ -194,7 +199,7 @@ def viewResource(request):
     [{'resource_one_id', 'year', 'month', 'day', 'state'}, ...]}
     """
     if request.method == 'GET':
-        if not _check_login(request.user):
+        if not _check_active(request.user):
             return _json_response({'error': 'Permission denied'})
         resource_id = request.GET.get('resource_id')
         if (resource_id is None) or (resource_id.strip() == ''):
@@ -212,7 +217,7 @@ def applyResource(request):
     """
     if request.method == 'POST':
         user = request.user
-        if not _check_login(user):
+        if not _check_active(user):
             return _json_response({'error': 'Permission denied'})
         resource_one_id = request.POST['resource_one_id']
         contact_info = request.POST['contact_info']
@@ -246,7 +251,7 @@ def listMyApplies(request):
     """
     if request.method == 'GET':
         user = request.user
-        if not _check_login(user):
+        if not _check_active(user):
             return _json_response({'error': 'Permission denied'})
         res = models.listMyApplies(user.id)
         return _json_response(res)
