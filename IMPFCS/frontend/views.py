@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
 from frontend.models import UserInfo
+import datetime
 
 
 def loginUser(request):
@@ -97,7 +98,7 @@ def competitions(request):
 @user_passes_test(lambda user: user.is_active)
 def applyTeam(request):
     user = request.user
-    user.is_applyingTeam = True
+    user.userinfo.is_applyingTeam = True
     user.userinfo.teamCategory = request.POST['teamCategory']
     user.userinfo.teamRole = request.POST['teamRole']
     user.userinfo.teamName = request.POST['teamName']
@@ -105,9 +106,12 @@ def applyTeam(request):
     user.userinfo.birth = request.POST['birth']
     user.userinfo.politicalBackground = request.POST['politicalBackground']
     user.userinfo.phoneNum = request.POST['phoneNum']
-    user.userinfo.email = request.POST['email']
+    user.email = request.POST['email']
     user.userinfo.address = request.POST['address']
     user.userinfo.work = request.POST['work']
+    user.userinfo.applyTeamTime = datetime.datetime.now()
+    user.userinfo.save()
+    user.save()
     return HttpResponseRedirect(reverse('frontend:profile'))
 
 

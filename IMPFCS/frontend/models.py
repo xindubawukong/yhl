@@ -13,19 +13,28 @@ class UserInfo(models.Model):
         (FEMALE, '女')
     )
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='')
-    EE = '电子工程系'
-    CS = '计算机科学与技术系'
     MISSING = ''
+    JIXIE = '机械系',
+    RENENG = '热能系',
+    DIANJI = '电机系',
+    DIANZI = '电子系',
+    JISUANJI = '计算机系',
+    ZIDONGHUA = '自动化系',
     DEP_CHOICES = (
         (MISSING, ''),
-        (EE, '电子工程系'),
-        (CS, '计算机科学与技术系'),
+        (JIXIE, '机械系'),
+        (RENENG, '热能系'),
+        (DIANJI, '电机系'),
+        (DIANZI, '电子系'),
+        (JISUANJI, '计算机系'),
+        (ZIDONGHUA, '自动化系'),
     )
     department = models.CharField(max_length=10, choices=DEP_CHOICES, default=MISSING)
     studentClass = models.CharField(max_length=6, default='')
     
     is_teamMember = models.BooleanField(default=False)
     is_applyingTeam = models.BooleanField(default=False)
+    applyTeamTime = models.DateTimeField(null=True)
     A = 'A'
     B = 'B'
     C = 'C'

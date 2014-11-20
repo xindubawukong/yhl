@@ -8,17 +8,6 @@
 <!-- BEGIN BODY -->
 
 <body class="page-header-fixed">
-
-	<!-- BEGIN CONTAINER -->
-
-	<div class="page-container row-fluid">
-
-		<!-- BEGIN PAGE -->  
-
-		<div class="page-content">
-
-			<!-- BEGIN PAGE CONTAINER-->
-
 			<div class="container-fluid">
 
 				<!-- BEGIN PAGE HEADER-->   
@@ -31,7 +20,7 @@
 
 							用户资料
 
-							{% if user.userinfo.is_teamMember %}}
+							{% if user.userinfo.is_teamMember %}
 								<small>代表队成员</small>
 							{% else %}
 								<small>普通用户</small>
@@ -145,54 +134,15 @@
 
 													<div class="controls">
 
-														<select name="department" class="small m-wrap" tabindex="1">
-
+														<select id="department_select" name="department" class="small m-wrap" tabindex="0">
 															<option title="" value=""></option>
-															<option title="建筑学院" value="000"> 建筑学院</option>
-															<option title="城规系" value="001"> 城规系</option>
-															<option title="建筑系" value="002"> 建筑系</option>
-															<option title="土木系" value="003"> 土木系</option>
-															<option title="水利系" value="004"> 水利系</option>
-															<option title="环境学院" value="005"> 环境学院</option>
-															<option title="机械系" value="012"> 机械系</option>
-															<option title="精仪系" value="013"> 精仪系</option>
-															<option title="热能系" value="014"> 热能系</option>
-															<option title="汽车系" value="015"> 汽车系</option>
-															<option title="工业工程" value="016"> 工业工程</option>
-															<option title="信息学院" value="021"> 信息学院</option>
-															<option title="电机系" value="022"> 电机系</option>
-															<option title="电子系" value="电子系"> 电子系</option>
-															<option title="计算机系" value="计算机系"> 计算机系</option>
-															<option title="自动化系" value="025"> 自动化系</option>
-															<option title="微纳电子系" value="026"> 微纳电子系</option>
-															<option title="航院" value="031"> 航院</option>
-															<option title="工物系" value="032"> 工物系</option>
-															<option title="化工系" value="034"> 化工系</option>
-															<option title="材料学院" value="035"> 材料学院</option>
-															<option title="理学院" value="041"> 理学院</option>
-															<option title="数学系" value="042"> 数学系</option>
-															<option title="物理系" value="043"> 物理系</option>
-															<option title="化学系" value="044"> 化学系</option>
-															<option title="生命学院" value="045"> 生命学院</option>
-															<option title="交叉信息院" value="047"> 交叉信息院</option>
-															<option title="经管学院" value="051"> 经管学院</option>
-															<option title="公管学院" value="059"> 公管学院</option>
-															<option title="金融学院" value="060"> 金融学院</option>
-															<option title="人文社科学院" value="061"> 人文社科学院</option>
-															<option title="中文系" value="063"> 中文系</option>
-															<option title="外文系" value="064"> 外文系</option>
-															<option title="法学院" value="066"> 法学院</option>
-															<option title="新闻学院" value="067"> 新闻学院</option>
-															<option title="马克思主义学院" value="068"> 马克思主义学院</option>
-															<option title="人文学院" value="069"> 人文学院</option>
-															<option title="社科学院" value="070"> 社科学院</option>
-															<option title="美术学院" value="080"> 美术学院</option>
-															<option title="土水学院" value="090"> 土水学院</option>
-															<option title="建管系" value="091"> 建管系</option>
-															<option title="建筑技术" value="099"> 建筑技术</option>		
-															<option title="医学院" value="400"> 医学院</option>
-															<option title="生医系" value="403"> 生医系</option>
-															<option title="软件学院" value="410"> 软件学院</option>
+															
+															<option title="机械系" value="机械系">机械系</option>
+															<option title="热能系" value="热能系">热能系</option>		
+															<option title="电机系" value="电机系">电机系</option>
+															<option title="电子系" value="电子系">电子系</option>
+															<option title="计算机系" value="计算机系">计算机系</option>
+															<option title="自动化系" value="自动化系">自动化系
 														</select>
 
 													</div>
@@ -213,8 +163,6 @@
 
 													<button type="submit" class="btn blue"><i class="icon-ok"></i> 更新资料</button>
 
-													<button type="button" class="btn">放弃编辑</button>
-
 												</div>
 
 											</form>
@@ -234,7 +182,10 @@
 													<label class="control-label">队伍类别</label>
 
 													<div class="controls">
+														{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.userinfo.teamCategory }}"disabled />
 
+														{% else %}
 														<select name="teamCategory" class="small m-wrap" tabindex="1">
 															<option value=""></option>
 
@@ -245,6 +196,7 @@
 															<option value="C">C</option>
 
 														</select>
+														{% endif %}
 													</div>
 												</div>
 												
@@ -252,7 +204,10 @@
 													<label class="control-label">队内职务</label>
 
 													<div class="controls">
+													{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.userinfo.teamRole }}"disabled />
 
+														{% else %}
 														<select name="teamRole" class="small m-wrap" tabindex="1">
 															<option value=""></option>
 
@@ -263,7 +218,7 @@
 															<option value="队员">队员</option>
 
 														</select>
-
+														{% endif %}
 													</div>
 												</div>
 
@@ -272,7 +227,12 @@
 													<label class="control-label">队名</label>
 
 													<div class="controls">
+														{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.userinfo.teamName }}"disabled />
+
+														{% else %}
 														<input type="text" name="teamName" class="m-wrap small" />
+														{% endif %}
 													</div>
 												</div>
 													
@@ -282,7 +242,12 @@
 													<label class="control-label">教练名称</label>
 
 													<div class="controls">
+														{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.userinfo.coach }}"disabled />
+
+														{% else %}
 														<input type="text" name="coach" class="m-wrap small" />
+														{% endif %}
 													</div>
 												</div>
 
@@ -292,7 +257,12 @@
 
 													<label class="control-label">出生日期</label>
 													<div class="controls">
+														{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.userinfo.birth }}"disabled />
+
+														{% else %}
 														<input class="m-wrap m-ctrl-medium date-picker" type="text" name="birth" data-date-format="yyyy-mm-dd" size="16">
+														{% endif %}
 													</div>
 												</div>
 
@@ -301,23 +271,26 @@
 													<label class="control-label">政治面貌</label>
 
 													<div class="controls">
+														{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.userinfo.politicalBackground }}"disabled />
 
+														{% else %}
 														<select name="politicalBackground" class="small m-wrap" tabindex="1">
 
-															<option value="Category 1"></option>
+															<option value=""></option>
 
-															<option value="Category 2">群众</option>
+															<option value="群众">群众</option>
 
-															<option value="Category 3">共青团员</option>
+															<option value="共青团员">共青团员</option>
 
-															<option value="Category 4">积极分子</option>
+															<option value="积极分子">积极分子</option>
 
-															<option value="Category 5">预备党员</option>
+															<option value="预备党员">预备党员</option>
 
-															<option value="Category 6">党员</option>
+															<option value="党员">党员</option>
 
 														</select>
-
+														{% endif %}
 													</div>
 												</div>
 
@@ -326,9 +299,12 @@
 													<label class="control-label">电话</label>
 
 													<div class="controls">
+														{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.userinfo.phoneNum }}"disabled />
 
+														{% else %}
 														<input type="text" name="phoneNum" value="{{ user.userinfo.studentClass }}" class="m-wrap small" />
-
+														{% endif %}
 													</div>
 												</div>
 
@@ -337,9 +313,12 @@
 													<label class="control-label">邮箱</label>
 
 													<div class="controls">
+														{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.email }}"disabled />
 
+														{% else %}
 														<input type="text" name="email" value="{{ user.userinfo.studentClass }}" class="m-wrap medium" />
-
+														{% endif %}
 													</div>
 												</div>
 
@@ -349,24 +328,33 @@
 													<label class="control-label">住址</label>
 
 													<div class="controls">
+														{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.userinfo.address }}"disabled />
 
+														{% else %}
 														<input type="text" name="address" value="{{ user.userinfo.studentClass }}" class="m-wrap medium" />
-
+														{% endif %}
 													</div>
 												</div>
 
 												<div class="control-group">
 													<label class="control-label">社会工作</label>
 													<div class="controls">
+														{% if user.userinfo.is_teamMember %}
+														<input class="m-wrap small" readonly type="text" placeholder="{{ user.userinfo.teamCategory }}"disabled />
+
+														{% else %}
 														<textarea class="medium m-wrap" name="work" rows="3"></textarea>
+														{% endif %}
 													</div>
 												</div>
-
+												{% if not user.userinfo.is_teamMember %}
 												<div class="form-actions ">
 
 													<button type="submit" class="btn blue"><i class="icon-ok"></i> 提交申请</button>
 
 												</div>
+												{% endif %}
 
 											</form>
 
@@ -394,17 +382,11 @@
 
 			<!-- END PAGE CONTAINER-->
 
-		</div>
-
-		<!-- END PAGE -->  
-
-	</div>
-
-	<!-- END CONTAINER -->
 
 {% include 'frontend/foot.html' %}
 <script type="text/javascript" src="{% static 'frontend/js/bootstrap-datepicker.js' %}"></script>
 <script type="text/javascript">
+$("#department_select option[value='{{ user.userinfo.department }}']").attr("selected", true);
 $(function() {
 	$('.date-picker').datepicker();
 	requestListApplies();
