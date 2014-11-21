@@ -87,18 +87,6 @@
 			
 				{% endif %}
 
-				{% if not user.is_superuser %}
-
-				<li class="start {% ifequal sidebar_select 3 %} active {% endifequal %}">
-				<a href="{% url 'frontend:resources' %}">
-						<i class="icon-home"></i>
-						<span class="title">资源</span>
-						{% ifequal sidebar_select 3 %}<span class="selected"></span>{% endifequal %}
-					</a>
-				</li>
-
-				{% endif %}
-
 				{% if user.is_superuser %}
 				<li class="start {% ifequal sidebar_select 4 %} active {% endifequal %}">
 					<a href="{% url 'frontend:management' %}">

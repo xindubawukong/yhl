@@ -35,26 +35,24 @@
 																         <th>赛事名称</th>										
 																         <th>比赛项目</th>
 																         <th>名次</th>
-																         <th>达到级别</th>
 																         <th>得分</th>
 																         <th>时间</th>
 																         <th>距离</th>
 																         <th>得分</th>
-																         <th>完赛身份</th>
 																         <th>信息状态</th>
 																      </tr>
 																   </thead>
+																   {% for score in scores %}
 																   <tbody>
 																      <tr>
-																         <td>射击</td>
-																         <td>奥运会</td>
-																         <td>男子50米步枪3X40</td>
-																         <td>团体第一名(团体降档)</td>
-																         <td>名次</td>
-																         <td>得分</td>
-																         <td></td>	
-																         <td></td>	
-																         <td></td>	
+																         <td>{{ score.category }}</td>
+																         <td>{{ score.name }}</td>
+																         <td>{{ score.competition }}</td>
+																         <td>{{ score.rank }}</td>
+																         <td>{{ score.score }}</td>
+																         <td>{{ score.time }}</td>
+																         <td>{{ score.dist }}</td>	
+																         <td>{{ score.state }}</td>	
 																         <td></td>	
 																         <td> 
 																         	<span class="label label-important label-mini">
@@ -65,49 +63,8 @@
 																      </tr>
 																     
 																   </tbody>
-																    <tbody>
-																      <tr>
-																         <td>射击</td>
-																         <td>奥运会</td>
-																         <td>男子50米步枪3X40</td>
-																         <td>团体第一名(团体降档)</td>
-																         <td>名次</td>
-																         <td>得分</td>
-																         <td></td>	
-																         <td></td>	
-																         <td></td>	
-																         <td></td>	
-																         <td> 
-																         	<span class="label label-inverse label-mini">
-																			待认证
-																			<i class="icon-bolt"></i>
-																	</span>
-																         </td>					
-																      </tr>
-																     
-																   </tbody>
-																   <tbody>
-																      <tr>
-																         <td style = "text-align: center">射击</td>
-																         <td>奥运会</td>
-																         <td>男子50米步枪3X40</td>
-																         <td>团体第一名(团体降档)</td>
-																         <td>名次</td>
-																         <td>得分</td>
-																         <td></td>	
-																         <td></td>	
-																         <td></td>	
-																         <td></td>	
-																         <td> 
-																         	<span class="label label-success label-mini">
-																			已认证
-																			<i class="icon-angle-up"></i>
-																	</span>
-																         </td>					
-																      </tr>
-																   </tbody>
-
-																  </tbody>
+																   {% endfor %}
+																    
 																   
 																   <tbody>
 																      <tr>

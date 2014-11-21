@@ -219,9 +219,9 @@
 
 										<ul class="nav nav-tabs">
 
-											<li class="active"><a href="#tab_1_1" data-toggle="tab">处理列表</a></li>
+											<li class="active"><a href="#tab_1_1" data-toggle="tab">资源申请</a></li>
 
-											<li><a href="#tab_1_3" data-toggle="tab">最近用户</a></li>
+											<li><a href="#tab_1_3" data-toggle="tab">代表队成员申请</a></li>
 
 										</ul>
 
@@ -232,6 +232,7 @@
 												<div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible="0">
 
 													<ul class="feeds">
+													{% for app in applications %}
 													<li>
 
 															<div class="col1">
@@ -252,10 +253,10 @@
 
 																		<div class="desc">
 
-																			<a>魏洪浩</a>申请使用<a>1月1日</a>的<a>气膜馆</a>
+																			<a>{{ app.s_id }}</a>申请使用<a>1月1日</a>的<a>气膜馆</a>
 
-																			<button type="button " class="btn green mini">同意</button>
-																			<button type="button " class="btn red mini">拒绝</button>
+																			<a href="/site/replyResourceApplication/accept/{{ app.id }}" type="button " class="btn green mini">同意</a>
+																			<a href="/site/replyResourceApplication/reject/{{ app.id }}" type="button " class="btn red mini">拒绝</a>
 																			
 																			</span>
 
@@ -281,110 +282,72 @@
 
 													</ul>
 
-												</div>
-
-											</div>
-
-											<div class="tab-pane" id="tab_1_3">
-
-												<div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
-
-													<div class="row-fluid">
-
-														<div class="span6 user-info">
-
-															<img alt="" src="media/image/avatar.png" />
-
-															<div class="details">
-
-																<div>
-
-																	<a href="#">魏洪浩</a> 
-
-																	<span class="label label-success">Approved</span>
-
-																</div>
-
-																<div>气膜馆</div>
-																<div>9月5日</div>
-
-															</div>
-
-														</div>
-
-														<div class="span6 user-info">
-
-															<img alt="" src="media/image/avatar.png" />
-
-															<div class="details">
-
-																<div>
-
-																	<a href="#">杨凯峪</a> 
-
-																	<span class="label label-important">Reject</span>
-
-																</div>
-
-																<div>综体</div>
-																<div>9月5日</div>
-
-															</div>
-
-														</div>
-
-													</div>
-
-													<div class="row-fluid">
-
-														<div class="span6 user-info">
-
-															<img alt="" src="media/image/avatar.png" />
-
-															<div class="details">
-
-																<div>
-
-																	<a href="#">魏洪浩</a> 
-
-																	<span class="label label-success">Approved</span>
-
-																</div>
-
-																<div>气膜馆</div>
-																<div>9月5日</div>
-
-															</div>
-
-														</div>
-
-														<div class="span6 user-info">
-
-															<img alt="" src="media/image/avatar.png" />
-
-															<div class="details">
-
-																<div>
-
-																	<a href="#">杨凯峪</a> 
-
-																	<span class="label label-important">Reject</span>
-
-																</div>
-
-																<div>综体</div>
-																<div>9月5日</div>
-
-															</div>
-
-														</div>
-
-													</div>
+													{% endfor %}
 
 												</div>
 
 											</div>
 
+											<div class="tab-pane active" id="tab_1_3">
+
+												<div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible="0">
+
+													<ul class="feeds">
+													{% for teamApp in teamApplications %}
+													<li>
+
+															<div class="col1">
+
+																<div class="cont">
+
+																	<div class="cont-col1">
+
+																		<div class="label label-success">                        
+
+																			<i class="icon-bell"></i>
+
+																		</div>
+
+																	</div>
+
+																	<div class="cont-col2">
+
+																		<div class="desc">
+
+																			<a>{{ teamApp.s_id }}</a>申请加入<a>{{ teamApp.teamName }}</a>
+
+																			<a href="/site/replyTeamApplication/accept/{{ teamApp.id }}" type="button " class="btn green mini">同意</a>
+																			<a href="/site/replyTeamApplication/reject/{{ teamApp.id }}" type="button " class="btn red mini">拒绝</a>
+																			
+																			</span>
+
+																		</div>
+
+																	</div>
+
+																</div>
+
+															</div>
+
+															<div class="col2">
+
+																<div class="date">
+
+																	Just now
+
+																</div>
+
+															</div>
+
+														</li>
+
+													</ul>
+
+													{% endfor %}
+
+												</div>
+
+											</div>
 										</div>
 
 									</div>
@@ -414,6 +377,8 @@
 										<a href="" class="collapse"></a>
 
 												<a class="btn mini blue" data-toggle="modal" href="#responsive">添加资源<i class="icon-plus"></i></a>
+												<form action="{% url 'frontend:addResource' %}" method="post">
+												{% csrf_token %}
 												<div id="responsive" class="modal hide fade" tabindex="-1" data-width="760">
 
 													<div class="modal-header">
@@ -433,7 +398,7 @@
 																<h4>名称</h4>
 
 																<p>
-																	<input type="text" class="span12 m-wrap" id="addResourceName"></p>
+																	<input type="text" name="loc" class="span12 m-wrap" id="addResourceName"></p>
 
 															</div>
 
@@ -442,7 +407,7 @@
 																<h4>描述</h4>
 
 																<p>
-																	<input type="text" class="span12 m-wrap" id="addResourceDescription"></p>
+																	<input type="text" name="desc" class="span12 m-wrap" id="addResourceDescription"></p>
 
 															</div>
 
@@ -451,7 +416,7 @@
 																<h4>日期</h4>
 
 																<p>
-																	<input type="text" class="span12 m-wrap" id="addResourceDates"></p>
+																	<input type="text" name="date" class="span12 m-wrap" id="addResourceDates"></p>
 
 															</div>
 												
@@ -464,12 +429,12 @@
 
 														<button type="button" data-dismiss="modal" class="btn">关闭</button>
 
-														<button type="button" class="btn blue" id="addResourceBtn">保存</button>
+														<button type="submit" class="btn blue" id="addResourceBtn">保存</button>
 
 													</div>
 												</div>
 
-
+												</form>
 
 									</div>
 
@@ -480,9 +445,16 @@
 									<div class="scroller" data-height="435px" data-always-visible="1" data-rail-visible1="1">
 
 										<ul class="chats" id="resources">
-
-
-
+											{% for res in resources %}
+											<li class="in">
+												<div class="message">
+													<span class="arrow"></span>
+													<span class="location">{{ res.loc }}</span>
+													<span class="description">{{res.desc}}</span>
+													<span class="datetime">{{ res.date }}</span>
+												</div>
+											</li>
+											{% endfor %}
 										</ul>
 
 									</div>
@@ -570,7 +542,3 @@
 
 	<!-- END JAVASCRIPTS -->
 {% include 'frontend/foot.html' %}
-
-<script src="{% static 'frontend/js/enalbleAJAX.js' %}" type="text/javascript"></script>
-
-<script src="{% static 'frontend/js/adminFoyer.js' %}" type="text/javascript"></script>

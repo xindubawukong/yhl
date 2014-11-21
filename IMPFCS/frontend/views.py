@@ -1,10 +1,15 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
 from frontend.models import UserInfo
+from django.contrib.auth.models import User
 import datetime
+import mongo
+
+client = mongo.MongoClient()
 
 
 def loginUser(request):
@@ -24,7 +29,7 @@ def loginUser(request):
                 else:
                     return render(request, 'frontend/completeInfo.html', {'user' : user})
             else:
-                return render(request, 'frontend/login.html', {'errorMsg' : 'Invalid username or password.'})
+                return render(request, 'frontend/login.html', {'errorMsg' : u'学号或密码错误'})
         except KeyError:
             raise Http404
     else:
@@ -64,12 +69,43 @@ def profile(request):
 
 @user_passes_test(lambda user: user.is_active)
 def foyer(request):
+    resources = client.get_resource('resource')
+    for i in range(len(resources)):
+            resources[i]['id'] = str(resources[i]['_id'])
     if request.user.is_superuser:
-        return render(request, 'frontend/adminFoyer.html', {'user': request.user,
-        'sidebar_select': 0})
+        applications = client.get_application('application')
+        app = []
+        for i in range(len(applications)):
+            applications[i]['id'] = str(applications[i]['_id'])
+            if applications[i]['state'] == 'suspending':
+                app.append(applications[i])
+        teamApplications = client.get_teamApplication('teamApplication')
+        teamApp = []
+        for i in range(len(teamApplications)):
+            teamApplications[i]['id'] = str(teamApplications[i]['_id'])
+            if teamApplications[i]['state'] == 'suspending':
+                teamApp.append(teamApplications[i]) 
+        return render(request, 'frontend/adminFoyer.html', 
+            {
+                'user': request.user,
+                'resources': resources, 
+                'applications': app,
+                'teamApplications': teamApp,
+                'sidebar_select': 0})
     else:
-        return render(request, 'frontend/foyer.html', {'user': request.user,
-        'sidebar_select': 0})
+        applications = client.get_user_application('application', request.user.username)
+        app = []
+        for i in range(len(applications)):
+            app.append(applications[i])
+            app[-1]['loc'] = client.get_resource_by_id('resource', app[-1]['resource_id'])['loc']
+        teamApplications = {'teamApplications': [{'teamName': u'游泳队', 'year': 2014, 'month': 1, 'day': 1, 'state': 'rejected'}]}
+        resourceApplications = {'resourceApplications': [{'loc': 'loc1', 'date': '20140102', 'state': 'accpeted'}]}
+        return render(request, 'frontend/foyer.html', 
+            {   'user': request.user,
+                'teamApplications': teamApplications['teamApplications'], 
+                'resourceApplications': app,
+                'resources': resources, 
+                'sidebar_select': 0})
         
 
 @user_passes_test(lambda user: user.is_active)
@@ -89,8 +125,12 @@ def resources(request):
 
 @user_passes_test(lambda user: user.is_active)
 def scores(request):
-    return render(request, 'frontend/scores.html', {'user': request.user,
-        'sidebar_select': 2})
+    scores = {'scores': [{'category': '射击', 'name': '奥运会', 'competition': '男子50米步枪3X40', 'rank': '1', 'score': '80', 'time': '0.01s', 'dist': '2m', 'state': 'rejected'}]}
+    return render(request, 'frontend/scores.html', 
+        {   'user': request.user,
+            'scores': scores['scores'],
+            'sidebar_select': 2
+        })
 
 
 @user_passes_test(lambda user: user.is_active)
@@ -116,25 +156,14 @@ def applyTeam(request):
     user.userinfo.applyTeamTime = datetime.datetime.now()
     user.userinfo.save()
     user.save()
+    client.insert_teamApplication('teamApplication', {
+        "s_id" : request.user.username,
+        "teamName" : request.POST['teamCategory'],
+        "date" : str(datetime.datetime.now())[:10],
+        "state" : 'suspending' # rejected \ suspending
+    })
     return HttpResponseRedirect(reverse('frontend:profile'))
 
-'''
-@user_passes_test(lambda user: user.is_superuser)
-def userManagement(request):
-    if request.method == 'GET':
-        return render(request, 'frontend/userManagement.html', {'user':
-            request.user, 'sidebar_select': 4 })
-    else:
-        raise Http404
-
-@user_passes_test(lambda user: user.is_superuser)
-def resourceManagement(request):
-    if request.method == 'GET':
-        return render(request, 'frontend/resourceManagement.html', {'user':
-            request.user, 'sidebar_select': 3 })
-    else:
-        raise Http404
-'''
 
 @user_passes_test(lambda user: user.is_superuser)
 def management(request):
@@ -143,3 +172,42 @@ def management(request):
             request.user, 'sidebar_select': 4 })
     else:
         raise Http404
+
+
+def addResource(request):
+    client.insert_resource('resource', 
+        {
+            'loc': request.POST['loc'],
+            'date': request.POST['date'],
+            'desc': request.POST['desc']
+        })
+    return HttpResponseRedirect(reverse('frontend:foyer'))
+
+
+def applyResource(request, resource_id):
+    client.insert_application('application', {
+    "s_id" : request.user.username,
+    "resource_id" : resource_id,
+    "date" : str(datetime.datetime.now())[:10],
+    "state" : 'suspending' # rejected \ suspending
+    })
+    return HttpResponseRedirect(reverse('frontend:foyer'))
+
+
+def replyResourceApplication(request, reply, application_id):
+    assert reply in ['accept', 'reject']
+    client.change_application_state('application', reply + 'ed', application_id)
+    return HttpResponseRedirect(reverse('frontend:foyer'))
+
+
+def replyTeamApplication(request, reply, application_id):
+    assert reply in ['accept', 'reject']
+    client.change_teamApplication_state('teamApplication', reply + 'ed', application_id)
+    app = client.get_teamApplication_by_id('teamApplication', application_id)
+    user = User.objects.get(username=app['s_id'])
+    if reply == 'accept':
+        user.userinfo.is_teamMember = True
+    user.userinfo.is_applyingTeam = False
+    user.userinfo.save()
+    user.save()
+    return HttpResponseRedirect(reverse('frontend:foyer'))
