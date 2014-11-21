@@ -64,9 +64,13 @@ def profile(request):
 
 @user_passes_test(lambda user: user.is_active)
 def foyer(request):
-    return render(request, 'frontend/foyer.html', {'user': request.user,
+    if request.user.is_superuser:
+        return render(request, 'frontend/adminFoyer.html', {'user': request.user,
         'sidebar_select': 0})
-
+    else:
+        return render(request, 'frontend/foyer.html', {'user': request.user,
+        'sidebar_select': 0})
+        
 
 @user_passes_test(lambda user: user.is_active)
 def message(request):
@@ -114,7 +118,7 @@ def applyTeam(request):
     user.save()
     return HttpResponseRedirect(reverse('frontend:profile'))
 
-
+'''
 @user_passes_test(lambda user: user.is_superuser)
 def userManagement(request):
     if request.method == 'GET':
@@ -130,12 +134,12 @@ def resourceManagement(request):
             request.user, 'sidebar_select': 3 })
     else:
         raise Http404
-
+'''
 
 @user_passes_test(lambda user: user.is_superuser)
-def scoreManagement(request):
+def management(request):
     if request.method == 'GET':
-        return render(request, 'frontend/scoreManagement.html', {'user':
-            request.user, 'sidebar_select': 3 })
+        return render(request, 'frontend/management.html', {'user':
+            request.user, 'sidebar_select': 4 })
     else:
         raise Http404

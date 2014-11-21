@@ -101,24 +101,10 @@
 
 				{% if user.is_superuser %}
 				<li class="start {% ifequal sidebar_select 4 %} active {% endifequal %}">
-					<a href="{% url 'frontend:userManagement' %}">
+					<a href="{% url 'frontend:management' %}">
 						<i class="icon-home"></i>
-						<span class="title">用户管理</span>
+						<span class="title">管理</span>
 						{% ifequal sidebar_select 4 %}<span class="selected"></span>{% endifequal %}
-					</a>
-				</li>
-				<li class="start {% ifequal sidebar_select 5 %} active {% endifequal %}">
-					<a href="{% url 'frontend:resourceManagement' %}">
-						<i class="icon-home"></i>
-						<span class="title">资源管理</span>
-						{% ifequal sidebar_select 5 %}<span class="selected"></span>{% endifequal %}
-					</a>
-				</li>
-				<li class="start {% ifequal sidebar_select 6 %} active {% endifequal %}">
-					<a href="{% url 'frontend:scoreManagement' %}">
-						<i class="icon-home"></i>
-						<span class="title">成绩管理</span>
-						{% ifequal sidebar_select 6 %}<span class="selected"></span>{% endifequal %}
 					</a>
 				</li>	
 				{% endif %}

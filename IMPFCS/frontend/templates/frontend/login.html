@@ -1,54 +1,105 @@
 {% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{% static 'frontend//iamge/favicon.png'%}">
 
-<html>
+    <title>清华大学体育平台</title>
 
+    <!-- Bootstrap -->
+    <link href="{% static 'frontend/css/bootstrap_1.css' %}" rel="stylesheet">
+	<link href="{% static 'frontend/css/bootstrap-theme_1.css' %}" rel="stylesheet">
 
-<head>
-  <title>Login</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Loading Flat UI -->
-  <link rel="stylesheet" href="{% static 'frontend/css/flat-ui.css' %}" />
-  <style>
-    .warning
-    {
-      color: red;
-      font-size: small;
-    }
-  </style>
-</head>
+    <!-- siimple style -->
+    <link href="{% static 'frontend/css/style_1.css'%}" rel="stylesheet">
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-<body>
-  <div class="login">
-    <div class="login-screen">
-      <div class="login-icon">
-        <img src="{% static 'frontend/img/login-icon.png' %}" alt="Welcome to Mail App" />
-        <h4>Welcome to <small>IMPFCS</small></h4>
-      </div>
-      <form action="{% url 'frontend:login' %}" method="post">
-      {% csrf_token %}
-        <div class="login-form">
-          <div class="control-group">
-              <input type="text" class="login-field" value="" placeholder="Enter your student ID" id="login-name" name="username" />
-              <label class="login-field-icon fui-man-16" for="login-name"></label>
-          </div>
+  <body>
 
-          <div class="control-group">
-              <input type="password" class="login-field" value="" placeholder="Password" id="login-pass" name="password" />
-              <label class="login-field-icon fui-lock-16" for="login-pass"></label>
-          </div>
-
-          {% if errorMsg %}
-          <p class="warning">{{ errorMsg }}</p>
-          {% endif %}
-
-          <input class="btn btn-primary" type="submit" value="Login" />
-          <a class="login-link" href="/admin/">Administrator?</a>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">清华大学体育平台</a>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
 
-</body>
+	<div id="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<h1>清华大学体育平台登陆页面</h1>
+					<h2 class="subtitle">请输入你的信息</h2>
+					<form class="form-inline signup" role="form" action="{% url 'frontend:login' %}" method="post">
+					<!--<form class="form-inline signup" role="form">-->
+					 {% csrf_token %}
+					  <div class="form-group">
+					    <input type="text" class="form-control" placeholder="请输入你的学号" style = "width : 50 px" id="login-name" name="username">
+					  </div>
+					  <div class="form-group">
+					    <input type="password" class="form-control"  placeholder="请输入你的密码" id="login-pass" name="password">
+					  </div>
+					  <button type="submit" class="btn btn-theme" value="Login">登陆</button>
+					  {% if errorMsg %}
+        					  <p class="warning">{{ errorMsg }}</p>
+        					  {% endif %}
+        					  <br>
+          					<a class="login-link" href="/admin/">Administrator?</a>
+					</form>					
+				</div>
+				<div class="col-lg-4 col-lg-offset-2">
+					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+					  <ol class="carousel-indicators">
+						<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+					  </ol>					
+					  <!-- slides -->
+					  <div class="carousel-inner">
+						<div class="item active">
+						  <img src="{% static 'frontend/image/slide1.png'%}" alt="">
+						</div>
+						<div class="item">
+						  <img src="{% static 'frontend/image/slide2.png'%}" alt="">
+						</div>
+						<div class="item">
+						  <img src="{% static 'frontend/image/slide3.png'%}" alt="">
+						</div>
+					  </div>
+					</div>		
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-lg-offset-3">
+					<p class="copyright">Copyright &copy; 2014 - Tsinghua University</p>
+			</div>
+		</div>		
+	</div>	
+	</div>
 
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
+  </body>
 </html>
