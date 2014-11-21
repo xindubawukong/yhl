@@ -11,6 +11,7 @@
 
     <title>清华大学体育平台</title>
 
+
     <!-- Bootstrap -->
     <link href="{% static 'frontend/css/bootstrap_1.css' %}" rel="stylesheet">
 	<link href="{% static 'frontend/css/bootstrap-theme_1.css' %}" rel="stylesheet">
@@ -45,7 +46,6 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6">
-					<h1>清华大学体育平台</h1>
 					<form class="form-inline signup" role="form" action="{% url 'frontend:login' %}" method="post">
 					<!--<form class="form-inline signup" role="form">-->
 					 {% csrf_token %}
@@ -58,26 +58,25 @@
 					  <button type="submit" class="btn btn-theme" value="Login">登陆</button>
 					  {% if errorMsg %}
         					  <p class="warning">{{ errorMsg }}</p>
-        			  {% endif %}
-        					  <br>
+
+        					  {% endif %}
+
 					</form>					
 				</div>
-				
+				<div class="col-lg-4 col-lg-offset-2">
+					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+					  <ol class="carousel-indicators">
+						<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+					  </ol>					
 				
 			</div>
 		</div>
 	</div>
-	<div id="footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-6 col-lg-offset-3">
-					<p class="copyright">Copyright &copy; 2014 - Tsinghua University</p>
-			</div>
-		</div>		
-	</div>	
-	</div>
 
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
     <script src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
   </body>
 </html>

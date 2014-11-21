@@ -1,7 +1,12 @@
 /* ==== Google font ==== */
 {% load staticfiles %}
+<<<<<<< HEAD
 /*@import url('http://fonts.googleapis.com/css?family=Lato:400,300,700,900');
 */
+=======
+@import url('http://fonts.googleapis.com/css?family=Lato:400,300,700,900');
+
+>>>>>>> c2f6fb1365cd2330c6564a47ebec6e0016979e30
 body {
   background-color: #f2f2f2;
     font-family: 'Lato', sans-serif;
