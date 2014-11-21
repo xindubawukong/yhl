@@ -66,6 +66,7 @@
 														{{ app.loc }}
 														{{ app.date }}
 
+														{% if app.state == 'rejected' %}
 														<span class="label label-important label-mini">
 
 															{{ app.state }}
@@ -73,6 +74,25 @@
 															<i class="icon-share-alt"></i>
 
 														</span>
+														{% endif %}
+														{% if app.state == 'accepted' %}
+														<span class="label label-success label-mini">
+
+															{{ app.state }}
+
+															<i class="icon-share-alt"></i>
+
+														</span>
+														{% endif %}
+														{% if app.state == 'suspending' %}
+														<span class="label label-warning label-mini">
+
+															{{ app.state }}
+
+															<i class="icon-share-alt"></i>
+
+														</span>
+														{% endif %}
 
 													</div>
 
