@@ -168,12 +168,14 @@ def applyTeam(request):
 @user_passes_test(lambda user: user.is_superuser)
 def management(request):
     if request.method == 'GET':
-        return render(request, 'frontend/management.html', {'user':
-            request.user, 'sidebar_select': 4 })
+        users = [u for u in User.objects.all() if u.is_active and not u.is_superuser and not u.userinfo.is_teamMember]
+        athletes = [u for u in User.objects.all() if u.is_active and not u.is_superuser and u.userinfo.is_teamMember]
+        return render(request, 'frontend/management.html', {'users': users, 'athletes': athletes, 'sidebar_select': 4 })
     else:
         raise Http404
 
 
+@user_passes_test(lambda user: user.is_superuser)
 def addResource(request):
     client.insert_resource('resource', 
         {
@@ -211,3 +213,9 @@ def replyTeamApplication(request, reply, application_id):
     user.userinfo.save()
     user.save()
     return HttpResponseRedirect(reverse('frontend:foyer'))
+
+
+@user_passes_test(lambda user: user.is_superuser)
+def deleteUser(request, username):
+    User.objects.get(username=username).delete()
+    return HttpResponseRedirect(reverse('frontend:management'))
