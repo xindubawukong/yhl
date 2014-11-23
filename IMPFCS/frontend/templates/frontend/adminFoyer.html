@@ -60,7 +60,7 @@
 
 								<i class="icon-home"></i>
 
-								<a href="index.html">Root</a> 
+								<a href="index.html">Root</a>
 
 								<i class="icon-angle-right"></i>
 
@@ -156,13 +156,13 @@
 						<div class="span6">
 							<div class="chat-form">
 
-										<div class="input-cont">   
+										<div class="input-cont">
 
 											<input class="m-wrap" type="text" placeholder="Type a message here to search" />
 
 										</div>
 
-										<div class="btn-cont"> 
+										<div class="btn-cont">
 
 											<span class="arrow"></span>
 
@@ -221,7 +221,7 @@
 
 											<li class="active"><a href="#tab_1_1" data-toggle="tab">资源申请</a></li>
 
-											<li><a href="#tab_1_3" data-toggle="tab">代表队成员申请</a></li>
+											<li><a href="#tab_1_2" data-toggle="tab">代表队成员申请</a></li>
 
 										</ul>
 
@@ -241,7 +241,7 @@
 
 																	<div class="cont-col1">
 
-																		<div class="label label-success">                        
+																		<div class="label label-success">
 
 																			<i class="icon-bell"></i>
 
@@ -257,7 +257,7 @@
 
 																			<a href="/site/replyResourceApplication/accept/{{ app.id }}" type="button " class="btn green mini">同意</a>
 																			<a href="/site/replyResourceApplication/reject/{{ app.id }}" type="button " class="btn red mini">拒绝</a>
-																			
+
 																			</span>
 
 																		</div>
@@ -288,7 +288,7 @@
 
 											</div>
 
-											<div class="tab-pane active" id="tab_1_2">
+											<div class="tab-pane" id="tab_1_2">
 
 												<div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible="0">
 
@@ -302,7 +302,7 @@
 
 																	<div class="cont-col1">
 
-																		<div class="label label-success">                        
+																		<div class="label label-success">
 
 																			<i class="icon-bell"></i>
 
@@ -318,7 +318,7 @@
 
 																			<a href="/site/replyTeamApplication/accept/{{ teamApp.id }}" type="button " class="btn green mini">同意</a>
 																			<a href="/site/replyTeamApplication/reject/{{ teamApp.id }}" type="button " class="btn red mini">拒绝</a>
-																			
+
 																			</span>
 
 																		</div>
@@ -419,7 +419,7 @@
 																	<input type="text" name="date" class="span12 m-wrap" id="addResourceDates"></p>
 
 															</div>
-												
+
 
 														</div>
 
@@ -459,7 +459,7 @@
 
 									</div>
 
-									
+
 
 								</div>
 
@@ -475,12 +475,13 @@
 
 			</div>
 
-			<!-- END PAGE CONTAINER-->    
+			<!-- END PAGE CONTAINER-->
 
+{% include 'frontend/foot.html' %}
 
-	<!-- BEGIN PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
 
-<script src="{% static 'frontend/js/jquery.vmap.js' %}" type="text/javascript"></script>   
+<script src="{% static 'frontend/js/jquery.vmap.js' %}" type="text/javascript"></script>
 
 <script src="{% static 'frontend/js/jquery.vmap.russia.js' %}" type="text/javascript"></script>
 
@@ -492,7 +493,7 @@
 
 <script src="{% static 'frontend/js/jquery.vmap.usa.js' %}" type="text/javascript"></script>
 
-<script src="{% static 'frontend/js/jquery.vmap.sampledata.js' %}" type="text/javascript"></script>  
+<script src="{% static 'frontend/js/jquery.vmap.sampledata.js' %}" type="text/javascript"></script>
 
 <script src="{% static 'frontend/js/jquery.flot.js' %}" type="text/javascript"></script>
 
@@ -502,7 +503,7 @@
 
 <script src="{% static 'frontend/js/date.js' %}" type="text/javascript"></script>
 
-<script src="{% static 'frontend/js/daterangepicker.js' %}" type="text/javascript"></script>     
+<script src="{% static 'frontend/js/daterangepicker.js' %}" type="text/javascript"></script>
 
 <script src="{% static 'frontend/js/jquery.gritter.js' %}" type="text/javascript"></script>
 
@@ -510,35 +511,35 @@
 
 <script src="{% static 'frontend/js/jquery.easy-pie-chart.js' %}" type="text/javascript"></script>
 
-<script src="{% static 'frontend/js/jquery.sparkline.min.js' %}" type="text/javascript"></script>  
+<script src="{% static 'frontend/js/jquery.sparkline.min.js' %}" type="text/javascript"></script>
 
 
 
 <script>
 
-		jQuery(document).ready(function() {    
+	jQuery(document).ready(function() {
 
-		   App.init(); // initlayout and core plugins
+		App.init(); // initlayout and core plugins
 
-		   Index.init();
+		Index.init();
 
-		   Index.initJQVMAP(); // init index page's custom scripts
+		Index.initJQVMAP(); // init index page's custom scripts
 
-		   Index.initCalendar(); // init index page's custom scripts
+		Index.initCalendar(); // init index page's custom scripts
 
-		   Index.initCharts(); // init index page's custom scripts
+		Index.initCharts(); // init index page's custom scripts
 
-		   Index.initChat();
+		Index.initChat();
 
-		   Index.initMiniCharts();
+		Index.initMiniCharts();
 
-		   Index.initDashboardDaterange();
+		Index.initDashboardDaterange();
 
-		   Index.initIntro();
+		Index.initIntro();
 
-		});
+	});
 
-	</script>
+</script>
 
-	<!-- END JAVASCRIPTS -->
-{% include 'frontend/foot.html' %}
+<!-- END JAVASCRIPTS -->
+
