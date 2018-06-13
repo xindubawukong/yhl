@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -55,13 +56,13 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'IMPFCS.urls'
 
 WSGI_APPLICATION = 'IMPFCS.wsgi.application'
-
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-SESSION_ENGINE = 'mongoengine.django.sessions'
-SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
+#SESSION_ENGINE = 'mongoengine.django.sessions'
+#SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 
 DATABASES = {
     'default': {
@@ -70,15 +71,15 @@ DATABASES = {
     }
 }
 
-import json
-config = json.load(open('config.json'))
-MONGO_DATABASE_NAME = config['database_name'] 
-MONGO_HOST = config['database_host']
-MONGO_PORT = config['database_port']
-MONGO_USERNAME = config['database_username']
-MONGO_PASSWORD = config['database_password']
-import mongoengine
-mongoengine.connect(MONGO_DATABASE_NAME, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USERNAME, password=MONGO_PASSWORD)
+#import json
+#config = json.load(open('config.json'))
+#MONGO_DATABASE_NAME = config['database_name'] 
+#MONGO_HOST = config['database_host']
+#MONGO_PORT = config['database_port']
+#MONGO_USERNAME = config['database_username']
+#MONGO_PASSWORD = config['database_password']
+#import mongoengine
+#mongoengine.connect(MONGO_DATABASE_NAME, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USERNAME, password=MONGO_PASSWORD)
 
 
 # Internationalization

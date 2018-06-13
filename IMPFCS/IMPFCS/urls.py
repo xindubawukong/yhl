@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'^$', lambda request: HttpResponseRedirect(reverse('frontend:foyer'))),
     url(r'^site/', include('frontend.urls', namespace='frontend')),
+#    url(r'^ccc/',views.ccc),
 )
