@@ -1,8 +1,8 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 import views
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^login/$', views.page),
     url(r'^page/$', views.login),
     url(r'^index/$',views.indexpage),
@@ -39,4 +39,4 @@ urlpatterns = patterns('',
     url(r'^deleteUser/(?P<username>[0-9]+)/$', views.deleteUser, name='deleteUser'),   
     url(r'^flow/$',views.flow_layer),
     url(r'^control/$',views.control_layer),
-)
+]

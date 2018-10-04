@@ -1,2 +1,3 @@
 *.pyc
 IMPFCS/mydatabase
+.DS_Store

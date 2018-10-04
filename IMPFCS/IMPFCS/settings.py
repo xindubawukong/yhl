@@ -55,6 +55,22 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'IMPFCS.urls'
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR+"/frontend/templates",],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
 WSGI_APPLICATION = 'IMPFCS.wsgi.application'
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

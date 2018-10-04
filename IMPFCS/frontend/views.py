@@ -8,7 +8,7 @@ from frontend.models import UserInfo
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
-from django.core.servers.basehttp import FileWrapper
+from wsgiref.util import FileWrapper
 from django import forms
 import pymongo
 import datetime
