@@ -443,6 +443,7 @@ def adjust(request):
 
 @csrf_exempt
 def ddd(request):
+    print("ddd")
     if request.method == 'POST':
         name=request.POST.getlist("num",None)
         pfile=open('./frontend/ps_data/new_ps1.ps','a')
@@ -845,7 +846,7 @@ def upall(request):
             		db=conn.biocad
 			#print "vistorid"
 			print vistorid
-            		if vistorid <=0:
+            		if vistorid <=10000:
                 		psidq = db.setting.find()
                 		psids = psidq[0]     #即使只有一条满足条件的记录也要>这么取
                 		vistorid = int(psids["maxid"])+1

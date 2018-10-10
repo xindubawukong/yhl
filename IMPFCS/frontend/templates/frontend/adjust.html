@@ -665,7 +665,7 @@
     {
         console.log("tian chong");
         var ctx = can.getContext('2d'); // 获取 2D 渲染上下文^M
-        alert(backdevices);
+        //alert(backdevices);
         if (can.id == "canvas2") {
             ctx.fillStyle = "#0F9217";
             var mk = 0;
@@ -826,6 +826,41 @@
         Tian_chong(o);
         return false;
     }
+
+
+    function imgType(ty) {
+        let type = ty.toLowerCase().replace(/jpg/i, 'jpeg');
+        var r = type.match(/png|jpeg|bmp|gif/)[0];
+        return 'image/' + r;
+    }
+
+    function download() {
+
+        let cans=document.getElementById("canvas2");
+        let ctx=cans.getContext("2d");
+
+        let type = 'png';   //设置下载图片的格式
+
+        let img_png_src = cans.toDataURL("image/png");  //将canvas保存为图片
+
+        let imgData = img_png_src.replace(imgType(type),'image/octet-stream');
+
+        let filename = '图片' + '.' + type; //下载图片的文件名
+
+        saveFile(imgData,filename);
+    }
+
+    let saveFile = function(data, fileName){
+        let save_link = document.createElement('a');
+        save_link.href = data;
+        save_link.download = fileName;
+
+        let event = document.createEvent('MouseEvents');
+        event.initEvent("click", true, false);
+        save_link.dispatchEvent(event);
+    };
+
+
     </script>
     <style type="text/css">
     #p0 {
@@ -1022,6 +1057,8 @@
 
     }
     </style>
+
+
 </head>
 
 <body onload="init()" oncontextmenu="doNothing()">
@@ -1086,13 +1123,10 @@
             <button id="btn-9" name="8" onmouseover="document.getElementById('btn-9').style.color='#c77405';document.getElementById('btn-9').style.background='#fdf5ce'" onmouseout="document.getElementById('btn-9').style.color='#ffffff';document.getElementById('btn-9').style.background='#0F9217'" onclick="undo()"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="17" viewBox="0 0 32 32">
                     <path fill="#444444" d="M16 2c-4.418 0-8.418 1.791-11.313 4.687l-4.686-4.687v12h12l-4.485-4.485c2.172-2.172 5.172-3.515 8.485-3.515 6.627 0 12 5.373 12 12 0 3.584-1.572 6.801-4.063 9l2.646 3c3.322-2.932 5.417-7.221 5.417-12 0-8.837-7.163-16-16-16z"></path>
                 </svg></button>
-            <form action="/site/ddd/" method="get">{% csrf_token %}
-                <!--10.7 cmy!-->
-                <button type="submit" name="s_thread" class="btn btn-primary " id="p2" onmouseover="document.getElementById('p2').style.color='#c77405';document.getElementById('p2').style.background='#fdf5ce'" onmouseout="document.getElementById('p2').style.color='#ffffff';
-            document.getElementById('p2').style.background='#0F9217'"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="17" viewBox="0 0 32 32">
+            <button type="submit" name="s_thread" class="btn btn-primary " id="p2" onmouseover="document.getElementById('p2').style.color='#c77405';document.getElementById('p2').style.background='#fdf5ce'" onmouseout="document.getElementById('p2').style.color='#ffffff';
+            document.getElementById('p2').style.background='#0F9217'" onclick="download()"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="17" viewBox="0 0 32 32">
                         <path fill="#444444" d="M18 8l-4-4h-14v26h32v-22h-14zM16 27l-7-7h5v-8h4v8h5l-7 7z"></path>
                     </svg></button>
-            </form>
         </div>
         <div style="position:absolute;top:0px;left:1000px;">
             <label><input name="11" type="checkbox" value="" onclick="flow_layer(this)" />Flow Layer</label>
