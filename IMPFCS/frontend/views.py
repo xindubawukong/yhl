@@ -573,44 +573,45 @@ def eee(request):
         print a1
         return HttpResponse(json.dumps(new_point))
 
+
 @csrf_exempt
 def backdevice(request):
         if request.method == 'GET':
-                request.session.set_expiry(0)
-		vistorid = int(request.session.get('vistorid',-1))
-		if vistorid>0:
-                	conn = pymongo.MongoClient("127.0.0.1",27017)
-			db = conn.biocad
-			psidq = db.vistor.find({"vistorid":vistorid})
+            request.session.set_expiry(0)
+        vistorid = int(request.session.get('vistorid', -1))
+        if vistorid > 0:
+            print("vistorid>0")
+            conn = pymongo.MongoClient("127.0.0.1",27017)
+            db = conn.biocad
+            print("db",db)
+            psidq = db.vistor.find({"vistorid":vistorid})
 #			print "vistorid"
 #			print vistorid
-			psids = psidq[0]
-		        psid=psids["pn"]
-        		collection = db.device1
-        		if psid==1: collection=db.device1
-        		if psid==2: collection=db.device2
-        		if psid==3: collection=db.device3
-        		if psid==4: collection=db.device4
-        		if psid==5: collection=db.device5
-        		if psid==6: collection=db.device6
-        		if psid==7: collection=db.device7
-        		if psid==8: collection=db.device8
-        		if psid==9: collection=db.device9
-        		if psid==10: collection=db.device10
-			max_content = collection.find({"vistorid":vistorid})
-                	data = []
-			if max_content:
-				for pdata in max_content:
-					data.append(pdata["p0"])
-					data.append(pdata["p1"])
-					data.append(pdata["p2"])
-					data.append(pdata["p3"])
-					data.append(pdata["p4"])
-#			print "sd"
-#			print data
-#			print "sd"
-                	return HttpResponse(json.dumps(data))
-		else:
+            psids = psidq[0]
+            psid=psids["pn"]
+            collection = db.device1
+            if psid==1:collection = db.device1
+            if psid==2:collection = db.device2
+            if psid==3: collection=db.device3
+            if psid==4: collection=db.device4
+            if psid==5: collection=db.device5
+            if psid==6: collection=db.device6
+            if psid==7: collection=db.device7
+            if psid==8: collection=db.device8
+            if psid==9: collection=db.device9
+            if psid==10: collection=db.device10
+            max_content = collection.find({"vistorid":vistorid})
+            data = []
+            if max_content:
+                for pdata in max_content:
+                    data.append(pdata["p0"])
+                    data.append(pdata["p1"])
+                    data.append(pdata["p2"])
+                    data.append(pdata["p3"])
+                    data.append(pdata["p4"])
+            print("data",data)
+            return HttpResponse(json.dumps(data))
+        else:
 			data = []
 			return HttpResponse(json.dumps(data))
 
@@ -834,6 +835,7 @@ def ggg(request):
 
 @csrf_exempt
 def upall(request):
+        print("call upall.")
         if request.method == 'POST':
                 form = UploadFileForm(request.POST, request.FILES)
                 if form:
