@@ -657,12 +657,14 @@ def backcontrol(request):
         if request.method == 'GET':
                 request.session.set_expiry(0)
                 vistorid = int(request.session.get('vistorid',-1))
+                print("vistorid",vistorid)
                 if vistorid>0:
                         conn = pymongo.MongoClient("127.0.0.1",27017)
                         db = conn.biocad
                         psidq = db.vistor.find({"vistorid":vistorid})
                         psids = psidq[0]
                         psid=psids["pn"]
+                        print("psid:"+str(psid))
                         collection = db.control1
                         if psid==1: collection=db.control1
                         if psid==2: collection=db.control2
@@ -681,7 +683,7 @@ def backcontrol(request):
                                         data.append(pdata["px"])
                                         data.append(pdata["py"])
                                         data.append(pdata["psid"])
-			
+                        print("data",data)
                         return HttpResponse(json.dumps(data))
                 else:
                         data = []
